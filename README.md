@@ -1,2 +1,2 @@
 # project
-Tamplate for web application to contorl users' accsess to data processor
+Template for web application to contorl users' access to data processor
