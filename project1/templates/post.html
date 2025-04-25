@@ -7,6 +7,9 @@
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ post.author.username }}</a>
               <small class="text-muted">{{ post.date_posted.strftime("%Y-%m-%d") }}</small>
+              {% if post.author == current_user%}
+              <a class = "m-2 btn btn-danger" href = "{{url_for('update_post', post_id = post.id)}}">Обновить пост</a>
+              {% endif %}              
             </div>
             <h2 class = "article-title">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
