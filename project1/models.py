@@ -1,26 +1,54 @@
-from datetime import datetime
+from datetime import date, datetime
+from enum import unique
 from itsdangerous import URLSafeTimedSerializer as Serializer
+from sqlalchemy import Nullable
+from sqlalchemy.sql.functions import user
 from project1 import db, login_manager, app
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    user_type, _, user_id = user_id.partition(":")
+    if user_type == "user":
+        return User.query.get(int(user_id))
+    elif user_type == "admin":
+        return Admin.query.get(int(user_id))
+    return None
 
+class BaseUser(UserMixin):
 
-class User(db.Model, UserMixin):
+    def get_role(self):
+        return self.__class__.__name__.lower()
+
+class User(BaseUser, db.Model):
+
+    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False,
-                           default='default.jpg')
-    password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    password_hash = db.Column(db.String(100), nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    date_started = db.Column(db.DateTime)
+    date_end = db.Column(db.DateTime)
+    is_blocked = db.Column(db.Boolean(), nullable=False, default=False)
+    
+    def get_id(self):
+        return f"user:{self.id}"
+
+ 
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
 
     def get_reset_token(self):
         s = Serializer(app.config['SECRET_KEY'])
-        return s.dumps({'user_id': self.id})
+        return s.dumps({'user_id': self.get_id()})
 
     @staticmethod
     def verify_reset_token(token):
@@ -35,14 +63,53 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
-
-class Post(db.Model):
+class Admin(BaseUser, db.Model):
+    __tablename__ = 'Admin'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(100), nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+
+
+    def get_id(self):
+        return f"admin:{self.id}"
+
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+
+    def get_reset_token(self):
+        s = Serializer(app.config['SECRET_KEY'])
+        return s.dumps({'user_id': self.get_id()})
+
+    #TODO: Переписать всю эту лабуду
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+
+            user_id = s.loads(token, 1800)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
+        return f"Admin('{self.username}', '{self.email}', '{self.image_file}')"
+
+
+class Sub(db.Model):
+    __tablename__ = 'Sub'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable = False, unique=True)
+    duration = db.Column(db.Integer, nullable = False, unique=True)
+    cost = db.Column(db.Integer, nullable=False)
+    
+
+    def __repr__(self) -> str:
+        return f"Sub({self.title}, {self.duration}, {self.cost})"

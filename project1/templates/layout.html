@@ -32,8 +32,10 @@
                 <div class="d-flex">
                     {% if current_user.is_authenticated %}
 
-                    <a href="{{url_for('new_post')}}" class="btn btn-outline-light">Посты</a>
-                   
+                    {% if current_user.get_role() == 'admin' %}
+                    <a href="{{url_for('settings')}}" class="btn btn-outline-light">Настройки</a>
+                    {% else %}
+                    {% endif %}
                     <a href="/account" class="btn btn-outline-light">Аккаунт</a>
                      <a href="/logout" class="btn btn-outline-light">Выйти</a>
                     {% else %}

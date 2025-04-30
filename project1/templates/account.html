@@ -5,7 +5,11 @@
   <div class="media">
     <img class="rounded-circle account-img" src="{{image_file}}">
     <div class="media-body">
-      <h2 class="account-heading">{{current_user.username}}</h2>
+        {% if current_user.get_role() == 'admin'%}
+        <h2 class="account-heading">{{current_user.username}}, Admin</h2>
+        {% else %}
+        <h2 class="account-heading">{{current_user.username}} </h2>
+        {% endif%}
       <p class="text-secondary">{{current_user.email}}</p>
     </div>
   </div>
@@ -59,8 +63,13 @@
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
         </form>
+
     </div>
 
+        {% if current_user.get_role() == 'user' %}
+        <a href = {{url_for('sub')}}>Подписка</a>
+        {%else%}
+        {% endif %}
     </div>
 </div>
 {% endblock content%}

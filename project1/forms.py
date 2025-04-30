@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from project1.models import User
+from project1.models import Admin, User
 
 
 class RegistrationForm(FlaskForm):
@@ -66,7 +66,8 @@ class RequestResetFrom(FlaskForm):
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
-        if user is None:
+        admin= Admin.query.filter_by(email=email.data).first()
+        if user is None and admin is None:
             raise ValidationError("Такого аккаунта нет")
 
 

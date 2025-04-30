@@ -3,23 +3,45 @@ from PIL import Image
 import os
 import secrets
 from flask import redirect, render_template, url_for, flash, request, abort
+from wtforms.validators import email
 from project1.forms import (PostForm, RegistrationForm, LoginFrom, UpdateAccountForm, PostForm,
                             RequestResetFrom, ResetPasswordForm)
 from project1 import app, db, bcrypt, mail
-from project1.models import User
-from project1.models import Post
+from project1.models import User, Admin
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 
 
 @app.route("/")
-@app.route("/home")
+@login_required
 def home():
-    page = request.args.get('page', default=1, type=int)
-    posts = Post.query.order_by(
-        Post.date_posted.desc()).paginate(per_page=2, page=page)
-    return render_template("homepage.html", title="Домашняя страница", posts=posts)
+    return render_template("homepage.html", title="Домашняя страница")
 
+
+@app.route('/settings', methods=["GET"])
+@login_required
+def settings():
+    if current_user.get_role() != 'admin':
+        abort(403)
+    return render_template('admin/settings.html', title='Настройки') 
+
+
+
+
+@app.route('/user_settings', methods=["GET"])
+@login_required
+def user_settings():
+    if current_user.get_role() != 'admin':
+        abort(403)
+    return render_template('admin/user_settings.html', title='Настройки пользователей')
+    
+
+@app.route('/sub_settings', methods=["GET"])
+@login_required
+def sub_settings():
+    if current_user.get_role() != 'admin':
+        abort(403)
+    return render_template('admin/sub_settings.html', title='Настройки пользователей')
 
 @app.route('/about')
 def about():
@@ -36,12 +58,17 @@ def login():
     if form.validate_on_submit():
         with app.app_context():
             user = User.query.filter_by(email=form.email.data).first()
-            if user and bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user, remember=form.remember.data)
-                next_page = request.args.get('next')
-
-                return redirect(next_page) if next_page else redirect(url_for('home'))
-            flash("Не получилось войти", 'danger')
+            if user:
+                if user.check_password(form.password.data):
+                    login_user(user, remember=form.remember.data)
+                    next_page = request.args.get('next')
+                
+                    return redirect(next_page) if next_page else redirect(url_for('home'))
+            user = Admin.query.filter_by(email=form.email.data).first()
+            if user:
+                if user.check_password(form.password.data):
+                    login_user(user, remember=form.remember.data)
+            flash("Неправильный логин или пароль", 'danger')
     return render_template('login.html', title='login', form=form)
 
 
@@ -52,11 +79,9 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(
-            form.password.data).decode("utf-8")
         user = User(username=form.username.data,  # pyright: ignore
-                    email=form.email.data,  # pyright: ignore
-                    password=hashed_password)  # pyright: ignore
+                    email=form.email.data) # pyright: ignore
+        user.set_password(form.password.data)
 
         with app.app_context():
             db.session.add(user)
@@ -111,76 +136,9 @@ def account():
     return render_template("account.html", title='Account', image_file=image_file, form=form)
 
 
-@app.route("/post/new", methods=['GET', "POST"])
-@login_required
-def new_post():
-    form = PostForm()
-    if form.validate_on_submit():
-        post = Post(title=form.title.data,  # pyright: ignore
-                    content=form.content.data,  # pyright: ignore
-                    author=current_user)  # pyright: ignore
-        db.session.add(post)
-        db.session.commit()
-        flash("Пост был создан", 'success')
-        return redirect(url_for('home'))
-    return render_template('create_post.html', title='New Post', form=form,
-                           legend="New Post")
-
-
-@app.route("/post/<int:post_id>")
-def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template("post.html", title=post.title, post=post)
-
-
-@app.route("/post/<int:post_id>/update", methods=["GET", "POST"])
-@login_required
-def update_post(post_id):
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    form = PostForm()
-
-    if form.validate_on_submit():
-        post.title = form.title.data
-        post.content = form.content.data
-        db.session.commit()
-        flash("Твой пост был обновлен", 'success')
-        return redirect(url_for('post', post_id=post.id))
-
-    if request.method == "GET":
-        form.title.data = post.title
-        form.content.data = post.content
-    return render_template("create_post.html",
-                           title="Update Post", form=form,
-                           legend="Update Post")
-
-
-@app.route("/post/<int:post_id>/delete", methods=["POST"])
-@login_required
-def delete_post(post_id):
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    db.session.delete(post)
-    db.session.commit()
-    flash("Пост был успешно удален", "success")
-    return redirect(url_for("home"))
-
-
-@app.route("/user/<string:username>")
-def user_posts(username):
-    page = request.args.get('page', default=1, type=int)
-    user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)\
-        .order_by(Post.date_posted.desc())\
-        .paginate(page=page, per_page=2)
-    return render_template("user_posts.html", title="Домашняя страница", posts=posts, user=user)
-
-
 def send_reset_email(user):
     token = user.get_reset_token()
-    msg = Message('Password Reset', sender="karpenkov211004@gmail.com",
+    msg = Message('Password Reset', sender="noreply@gmail.com",
                   recipients=[user.email])
     msg.body = f'''
     Чтобы обновить свой пароль перейди по ссылке:
@@ -196,11 +154,22 @@ def reset_request():
     form = RequestResetFrom()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        send_reset_email(user)
-        flash('Письмо было отправлено', 'info')
-        return redirect(url_for('login'))
+        if user:
+            flash('Письмо было отправлено', 'info')
+            send_reset_email(user)
+            return redirect(url_for('login'))
+        user = Admin.query.filter_by(email=form.email.data).first()
+        if user:
+            send_reset_email(user)
+            flash('Письмо было отправлено', 'info')
+            return redirect(url_for('login'))
     return render_template('reset_request.html', title='Reset Password', form=form)
 
+@login_required
+@app.route('/subscribition')
+def sub():
+    return render_template('sub.html')
+    
 
 @app.route('/reset_password/<string:token>', methods=["GET", 'POST'])
 def reset_token(token):
