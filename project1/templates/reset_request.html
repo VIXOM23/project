@@ -8,7 +8,7 @@
             {{ form.hidden_tag()}}
             <fieldset class = "form-group">
 
-                <legend class = "border-bottom mb-4">Loggin IN</legend>
+                <legend class = "border-bottom mb-4">Reset Password</legend>
 
                 <div class = "form-group">
                     {{ form.email.label(class="form-control-label") }}
@@ -24,17 +24,9 @@
                     {% endif %}
                 </div>
 
-                <div class = "form-group">
-                    {{form.password.label(class = "form-control-label")}}
-                    {{form.password(class = "form-control form-control-lg")}}
-                </div>
 
             
             </fieldset>
-            <div class = "form-group m-2">
-                {{form.remember.label()}}
-                {{form.remember(class = "btn btn-outline-info")}}
-            </div>
             <div class = "form-group mt-2">
                 {{form.submit(class = "btn btn-outline-info")}}
             </div>
@@ -43,15 +35,5 @@
 
     </div>
     <div>
-        <div class = "border-top pt-3 m-3">
-            <small class = "text-muted">
-                <a class = "ml-2" href = "{{ url_for('register')}}">New here?</a>
-                </small>
-
-            <small class = "text-muted">
-                <a class = "ml-2" href = "{{ url_for('reset_request')}}">Забыли пароль?</a>
-                </small>
-        </div>
-    </div>
 
 {%endblock content%}
