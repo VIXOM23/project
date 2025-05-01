@@ -46,7 +46,15 @@ def user_settings():
                            users = users,
                            form = form,
                            finded_user = finded_user)
-    
+
+@app.route('/user_pages/<int:user_id>', methods=["GET", "POST"])
+@login_required
+def user_pages(user_id):
+    if current_user.get_role() != 'admin':
+        abort(403)
+    user_id = request.args.get('user_id', type=int)
+    user = User.query.get(user_id)
+    return render_template('admin/user_profile.html', title="Страница пользователя", user=user)
 
 @app.route('/sub_settings', methods=["GET"])
 @login_required

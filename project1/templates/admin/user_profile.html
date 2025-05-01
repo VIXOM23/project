@@ -1,0 +1,6 @@
+{% extends layout.html%}
+{%block content}
+<h2> Имя пользователя: {{user.username}}</h2>
+<p> Электронная почта: {{user.email}} </p>
+<p> Подписка действительна до: {{user.end_time}} </p>
+{%endblock content%}

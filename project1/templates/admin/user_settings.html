@@ -8,7 +8,7 @@
   <button type="submit">Убрать всех пользователей</button>
 </form>
 {%for user in users%}
-<h3><a href = '#'>Имя пользователя: {{ user.username }}, почта: {{ user.email }}, статус подписки: {% if user.end_time is not none %}1{% else %}0{% endif %}</a></h3>
+<h3><a href = "{{url_for('user_pages', user_id=user.id)}}">Имя пользователя: {{ user.username }}, почта: {{ user.email }}, статус подписки: {% if user.end_time is not none %}1{% else %}0{% endif %}</a></h3>
 {%endfor%}
 
 {%else%}
