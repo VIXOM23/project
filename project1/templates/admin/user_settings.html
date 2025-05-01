@@ -8,9 +8,12 @@
   <button type="submit">Убрать всех пользователей</button>
 </form>
 {%for user in users%}
-<h3><a href = "{{url_for('user_pages', user_id=user.id)}}">Имя пользователя: {{ user.username }}, почта: {{ user.email }}, статус подписки: {% if user.end_time is not none %}1{% else %}0{% endif %}</a></h3>
+<h3><a href = "{{url_for('user_pages', user_id=user.id)}}">{{user.id}}Имя пользователя: {{ user.username }}, почта: {{ user.email }}
+        , статус подписки: {% if user.end_time %}1{% else %}0{% endif %}</a>{{user.end_time}}</h3>
 {%endfor%}
-
+{% for link in links%}
+<a href = "{{url_for('user_settings', page=link, all_users=1)}}">{{link}}</a>
+{%endfor%}
 {%else%}
 <form method="POST" action="{{url_for('user_settings', all_users = 1)}}">
   <button type="submit">Получить всех пользователей</button>
@@ -36,7 +39,8 @@
             </div>
 </form>
 {%if finded_user%}
-  <a href = #>{{finded_user.username}}  {{finded_user.email}}</a>
+  <h2> Найден пользователь: </h1>
+  <a href = "{{url_for('user_pages', user_id=finded_user.id)}}">{{finded_user.username}}  {{finded_user.email}}</a>
   {%else%}
   {%endif%}
 {%endif%}

@@ -7,7 +7,7 @@ from wtforms.validators import email
 from project1.forms import (RegistrationForm, LoginFrom, UpdateAccountForm,
                             RequestResetFrom, ResetPasswordForm, SearchUsers)
 from project1 import app, db, bcrypt, mail
-from project1.models import User, Admin
+from project1.models import Sub, User, Admin
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 
@@ -26,16 +26,33 @@ def settings():
     return render_template('admin/settings.html', title='Настройки') 
 
 
+@app.route('/settings/subs/sub_<int:sub_id>', methods=["GET", "POST"])
+@login_required
+def sub_page(sub_id):
+    sub = Sub.query.get(sub_id)
+    return render_template('admin/sub_page.html', title="Подписка",
+                           sub = sub)
+
+@app.route('/settings/subs', methods=["GET", "POST"])
+@login_required
+def sub_settings():
+    if current_user.get_role() != 'admin':
+        abort(403)
+    subs = Sub.query.all()
+    return render_template('admin/sub_settings.html', title="Настройки подписки ", subs=subs)
 
 
 @app.route('/user_settings', methods=["GET", "POST"])
 @login_required
 def user_settings():
     form = SearchUsers()
+    page = request.args.get('page', 1, type=int)
     all_users = request.args.get('all_users', 0, type=int)
     users = None
+    links = None
     if all_users:
-        users = User.query.all()
+        users = User.query.paginate(page=page, per_page=5)
+        links = users.iter_pages()
     if current_user.get_role() != 'admin':
         abort(403)
     finded_user = None
@@ -45,27 +62,18 @@ def user_settings():
                            title='Настройки пользователей',
                            users = users,
                            form = form,
-                           finded_user = finded_user)
+                           finded_user = finded_user,
+                           links=links)
 
 @app.route('/user_pages/<int:user_id>', methods=["GET", "POST"])
 @login_required
 def user_pages(user_id):
     if current_user.get_role() != 'admin':
         abort(403)
-    user_id = request.args.get('user_id', type=int)
+    print(user_id)
     user = User.query.get(user_id)
     return render_template('admin/user_profile.html', title="Страница пользователя", user=user)
 
-@app.route('/sub_settings', methods=["GET"])
-@login_required
-def sub_settings():
-    if current_user.get_role() != 'admin':
-        abort(403)
-    return render_template('admin/sub_settings.html', title='Настройки пользователей')
-
-@app.route('/about')
-def about():
-    return "<h1>Welcome to about page<h1>"
 
 
 @app.route('/login', methods=["GET", "POST"])
