@@ -53,11 +53,14 @@ class UpdateAccountForm(FlaskForm):
             if user:
                 raise ValidationError("This email is taken. Выбери другое")
 
+class SearchUsers(FlaskForm):
+    login = StringField("Логин", validators=[DataRequired()])
+    submit = SubmitField("Искать")
 
-class PostForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired()])
-    content = TextAreaField("Content", validators=[DataRequired()])
-    submit = SubmitField("Post")
+    def validate_login(self, login):
+        user=User.query.filter_by(username=login.data).first()
+        if user is None:
+            raise ValidationError("Такого пользователя нет")
 
 
 class RequestResetFrom(FlaskForm):

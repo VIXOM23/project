@@ -2,6 +2,42 @@
 
 {% block content%}
 <h1>Страница настройки пользователей</h1>
+{%if users%}
 
+<form method="POST" action="{{url_for('user_settings', all_users = 0)}}">
+  <button type="submit">Убрать всех пользователей</button>
+</form>
+{%for user in users%}
+<h3><a href = '#'>Имя пользователя: {{ user.username }}, почта: {{ user.email }}, статус подписки: {% if user.end_time is not none %}1{% else %}0{% endif %}</a></h3>
+{%endfor%}
 
+{%else%}
+<form method="POST" action="{{url_for('user_settings', all_users = 1)}}">
+  <button type="submit">Получить всех пользователей</button>
+</form>
+<form method="POST">  <!-- Убедитесь, что method="POST" -->
+    {{ form.hidden_tag() }}                
+    <div class = "form-group">
+                    {{ form.login.label(class="form-control-label") }}
+                    {% if form.login.errors %}
+                        {{ form.login(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.login.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.login(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+            <div class = "form-group mt-2">
+                {{form.submit(class = "btn btn-outline-info")}}
+            </div>
+</form>
+{%if finded_user%}
+  <a href = #>{{finded_user.username}}  {{finded_user.email}}</a>
+  {%else%}
+  {%endif%}
+{%endif%}
 {%endblock content%}    

@@ -4,8 +4,8 @@ import os
 import secrets
 from flask import redirect, render_template, url_for, flash, request, abort
 from wtforms.validators import email
-from project1.forms import (PostForm, RegistrationForm, LoginFrom, UpdateAccountForm, PostForm,
-                            RequestResetFrom, ResetPasswordForm)
+from project1.forms import (RegistrationForm, LoginFrom, UpdateAccountForm,
+                            RequestResetFrom, ResetPasswordForm, SearchUsers)
 from project1 import app, db, bcrypt, mail
 from project1.models import User, Admin
 from flask_login import login_user, current_user, logout_user, login_required
@@ -28,12 +28,24 @@ def settings():
 
 
 
-@app.route('/user_settings', methods=["GET"])
+@app.route('/user_settings', methods=["GET", "POST"])
 @login_required
 def user_settings():
+    form = SearchUsers()
+    all_users = request.args.get('all_users', 0, type=int)
+    users = None
+    if all_users:
+        users = User.query.all()
     if current_user.get_role() != 'admin':
         abort(403)
-    return render_template('admin/user_settings.html', title='Настройки пользователей')
+    finded_user = None
+    if form.validate_on_submit():
+        finded_user = User.query.filter_by(username = form.login.data).first()
+    return render_template('admin/user_settings.html',
+                           title='Настройки пользователей',
+                           users = users,
+                           form = form,
+                           finded_user = finded_user)
     
 
 @app.route('/sub_settings', methods=["GET"])
@@ -72,6 +84,7 @@ def login():
     return render_template('login.html', title='login', form=form)
 
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -81,7 +94,7 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data,  # pyright: ignore
                     email=form.email.data) # pyright: ignore
-        user.set_password(form.password.data)
+        user.set_password(form.password.data) 
 
         with app.app_context():
             db.session.add(user)
@@ -110,7 +123,7 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
-
+#TODO: Поменять смену информации для админов, возможно сделать функцию для получения пользователя 
 @app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
