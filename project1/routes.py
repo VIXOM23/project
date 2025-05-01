@@ -107,8 +107,7 @@ def register():
         with app.app_context():
             db.session.add(user)
             db.session.commit()
-        flash(f"Аккаунт создан для {form.username.data}, {
-              form.email.data}", 'success')
+        flash(f"Аккаунт создан для {form.username.data},{form.email.data}", 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
