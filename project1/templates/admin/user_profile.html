@@ -1,10 +1,30 @@
 {% extends "layout.html"%}
 {%block content%}
-<h2> Имя пользователя: {{user.username}}</h2>
-<p> Электронная почта: {{user.email}} </p>
-{% if user.end_date%}
-<p>Подписка действительна до: {{user.end_date}} </p>
-{% else %}
-<p>Подписка неактивна</p>
-{% endif %}
+<form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.date_end.label }}
+            {{form.date_end}}
+            {% if form.date_end.errors %}
+                <div class="error">{{ form.date_end.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{form.is_blocked.label}}
+            {{form.is_blocked}}
+            {% if form.is_blocked.errors %}
+                <div class="error">{{ form.is_blocked.errors[0] }}</div>
+            {% endif %}
+
+        <div class="form-group">
+            {{form.lasts.label}}
+            {{form.lasts}}
+            {% if form.lasts.errors %}
+                <div class="error">{{ form.lasts.errors[0] }}</div>
+            {% endif %}
+        </div>
+        {{ form.submit }}
+    </form>
 {%endblock content%}

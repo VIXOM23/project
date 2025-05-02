@@ -1,3 +1,4 @@
+from random import choice
 from Demos.win32ts_logoff_disconnected import username
 from PIL import Image
 import os
@@ -5,7 +6,8 @@ import secrets
 from flask import redirect, render_template, url_for, flash, request, abort
 from wtforms.validators import email
 from project1.forms import (RegistrationForm, LoginFrom, UpdateAccountForm,
-                            RequestResetFrom, ResetPasswordForm, SearchUsers, UserFilterForm)
+                            RequestResetFrom, ResetPasswordForm, SearchUsers, UserFilterForm,
+                            UpdateUserInfo)
 from project1 import app, db, bcrypt, mail
 from project1.models import Sub, User, Admin
 from flask_login import login_user, current_user, logout_user, login_required
@@ -41,7 +43,7 @@ def sub_settings():
     subs = Sub.query.all()
     return render_template('admin/sub_settings.html', title="Настройки подписки ", subs=subs)
 
-
+#TODO: Добавить в модель USER поле активные попытки
 @app.route('/user_settings', methods=["GET", "POST"])
 @login_required
 def user_settings():
@@ -54,11 +56,15 @@ def user_settings():
         search_type = form.search_type.data
         search_query = form.search_query.data
         if search_type == 'username':
+            users = User.query.filter_by(username = search_query)
+        elif search_type == 'username_soft':
             users = User.query.filter(User.username.contains(search_query)).all()
         elif search_type == 'email':
             users = User.query.filter_by(email=search_query)
-        elif search_type == 'status':
-            users = User.query.filter(not User.date_end is None)
+        elif search_type == 'email_soft':
+            users = User.query.filter(User.email.contains(search_query))
+        elif search_type == 'subscribe':
+            users = User.query.filter(User.date_end.isnot(None)).all()
         elif search_type == 'blocked':
             users = User.query.filter_by(is_blocked = True) 
     return render_template('admin/user_settings.html', users = users, title="Настройки пользователей", form=form)
@@ -69,9 +75,22 @@ def user_settings():
 def user_pages(user_id):
     if current_user.get_role() != 'admin':
         abort(403)
-    print(user_id)
+    form = UpdateUserInfo()
     user = User.query.get(user_id)
-    return render_template('admin/user_profile.html', title="Страница пользователя", user=user)
+    if form.validate_on_submit():
+        user = User.query.get(int(user_id))
+        user.date_end = form.date_end.data
+        user.is_blocked = form.is_blocked.data
+        db.session.commit()
+        return redirect(url_for('user_pages', user_id = user_id))
+    if request.method == "GET":
+        form.date_end.data = user.date_end
+        form.is_blocked.data = user.is_blocked
+        form.lasts.data = 5
+    return render_template('admin/user_profile.html',
+                           title="Страница пользователя",
+                           user=user,
+                           form = form)
 
 
 

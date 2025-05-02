@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
+import wtforms
 from flask_login import current_user
-from wtforms import RadioField, StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import DateField, IntegerField, RadioField, StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, email
+
 from project1.models import Admin, User
 
 
@@ -26,6 +28,17 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError("This email is taken. Выбери другое")
 
+
+class UpdateUserInfo(FlaskForm):
+    date_end = DateField("Конец пользования подписки")
+    is_blocked = BooleanField("Заблокировать")
+    lasts = IntegerField("Оставшиеся попытки")
+    submit = SubmitField("Подтвердить изменения")
+
+
+    def validate_lasts(self, lasts):
+        if lasts.data >= 10:
+            raise ValidationError("Количество разрешенных доступов слишком большое")
 
 class LoginFrom(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
@@ -56,9 +69,13 @@ class UserFilterForm(FlaskForm):
     search_type = RadioField("Тип поиска", 
                              choices=[
                                 ('username', 'Логин'),
+                                ('username_soft', 'Частичное совпадение по логину'),
                                 ('email', 'Почта'),
-                                ('status', 'Статус'),
-                                ('blocked', 'Заблокированные')
+                                ('email_soft', 'Частичное совпадение по почте'),
+                                ('subscribe', 'Активная подписка'),
+                                ('has_access', 'Имеющие доступ к сервису'),
+                                ('blocked', 'Заблокированные'),
+                
                              ])
     search_query = StringField("Запрос", render_kw={"placeholder": "Введите значение для поиска"})
     submit = SubmitField("Искать")

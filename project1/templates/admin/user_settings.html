@@ -15,7 +15,7 @@
                 {% endfor %}
             </div>
             {% if form.search_type.errors %}
-                <div class="error">{{ form.search_type.errors[0] }}</div>
+                <div class="error m-3">{{ form.search_type.errors[0] }}</div>
             {% endif %}
         </div>
         
@@ -31,7 +31,7 @@
     </form>
     {%if users%}
     {% for user in users%}
-    <a href="{{url_for('user_pages', user_id = user.id)}}">Пользователь {{user.username}}, статус {{user.is_active()}}, почта {{user.email}}</a>
+    <a href="{{url_for('user_pages', user_id = user.id)}}">Пользователь {{user.username}}, статус {{user.is_active()}}, почта {{user.email}}</a><br>
     {% endfor%}
     {%else%}
     {%endif%}
