@@ -1,8 +1,9 @@
 {%extends "layout.html"%}
 
 {% block content%}
-<h1>Страница настройки подписки</h1>
-
+{% for sub in subs%}
+<a href = "{{url_for('sub_page', sub_id = sub.id)}}"> Подписка на {{sub.title}}, действует на срок {{sub.duration}}, c ценой {{sub.cost}}</a>
+{% endfor %}
 
 {%endblock content%}    
 

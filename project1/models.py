@@ -37,7 +37,11 @@ class User(BaseUser, db.Model):
     def get_id(self):
         return f"user:{self.id}"
 
- 
+    
+    def int_id(self):
+        return self.id
+
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
