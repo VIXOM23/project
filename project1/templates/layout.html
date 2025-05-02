@@ -1,71 +1,34 @@
+
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Шапка сайта</title>
-    <!-- Подключение Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"></head>
+    <link rel="stylesheet" href="{{url_for('static', filename='user.css')}}">
+</head>
+
 <body>
-    <!-- Шапка сайта -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-        <div class="container-fluid">
-            <!-- Логотип или название сайта -->
-            <a class="navbar-brand" href="/">Мой Сайт</a>
+<div class="user-page">
 
-            <!-- Кнопка для мобильных устройств -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Навигация -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Главная</a>
-                    </li>
-                </ul>
-
-                <!-- Ссылки на регистрацию и логин -->
-
-                <div class="d-flex">
-                    {% if current_user.is_authenticated %}
-
-                    {% if current_user.get_role() == 'admin' %}
-                    <a href="{{url_for('settings')}}" class="btn btn-outline-light">Настройки</a>
-                    {% else %}
-                    {% endif %}
-                    <a href="/account" class="btn btn-outline-light">Аккаунт</a>
-                     <a href="/logout" class="btn btn-outline-light">Выйти</a>
-                    {% else %}
-                    <a href="/register" class="btn btn-warning me-2">Регистрация</a>
-                    <a href="/login" class="btn btn-outline-light">Войти</a>
-                    {% endif %}
-
-                </div>
-            </div>
+    <div class="shapka-container">
+    <div class="shapka-field">
+        <div class="user-logo">
+            <img src="{{url_for('static', filename='images/user_black.svg')}}" alt="User">
         </div>
-    </nav>
+        <a href = "{{url_for('account')}}"><button type="button" class="auth-button">PERSONAL ACCOUNT</button></a>
+      </div>
 
-    {% with messages = get_flashed_messages(with_categories = True)%}
-        {% if messages %}
-
-        {% for category, message in messages%}
-
-            <div class = "alert alert-{{category}}"> 
-
-            {{message}}
-            </div>
-        {%endfor%}
-        {% endif %}
-    {% endwith %}
-    <div class = 'content'>
-    {% block content %}
-    
-    {% endblock content %}
+      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button">LOG OUT</button></a>
+      {% if current_user.get_role() == 'admin'%}
+      <a href = "{{url_for('settings')}}"><button type="button" class="auth-button">SETTINGS</button></a>
+    {% else %}
+    {% endif%}
     </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    <!-- Подключение Bootstrap JS (необходим для работы navbar-toggler) -->
+
+    {%block content%}
+
+    {% endblock content%}
+ 
+</div>
+</body>
 </html>

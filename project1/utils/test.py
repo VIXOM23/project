@@ -12,6 +12,5 @@ with app.app_context():
     print(Admin.query.all())
     # print(Sub.query.all())
     users = User.query.all()
-    for user in users:
-        print(user.date_end)
+    print(users)
     # passSDFKL;ASDF

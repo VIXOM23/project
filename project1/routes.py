@@ -17,7 +17,7 @@ from flask_mail import Message
 @app.route("/")
 @login_required
 def home():
-    return render_template("homepage.html", title="Домашняя страница")
+    return render_template("main.html", title="Домашняя страница")
 
 
 @app.route('/settings', methods=["GET"])
