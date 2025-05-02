@@ -88,14 +88,14 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if user:
                 if user.check_password(form.password.data):
-                    login_user(user, remember=form.remember.data)
+                    login_user(user)
                     next_page = request.args.get('next')
                 
                     return redirect(next_page) if next_page else redirect(url_for('home'))
             user = Admin.query.filter_by(email=form.email.data).first()
             if user:
                 if user.check_password(form.password.data):
-                    login_user(user, remember=form.remember.data)
+                    login_user(user)
             flash("Неправильный логин или пароль", 'danger')
     return render_template('login.html', title='login', form=form)
 
