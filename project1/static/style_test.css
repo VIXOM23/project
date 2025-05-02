@@ -30,7 +30,9 @@ body {
       url('../static/images/background.png') no-repeat center center;
   background-size: cover;
 }
-
+.red_color{
+  color:red;
+}
 .auth-container {
   width: 100%;
   max-width: 400px;

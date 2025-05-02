@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, email
 from project1.models import Admin, User
 
 
@@ -30,6 +30,17 @@ class LoginFrom(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Log In")
+
+    def validate_password(self, password):
+        user = User.query.filter_by(email=self.email.data).first()
+        admin = Admin.query.filter_by(email = self.email.data).first()
+
+        if user:
+            if not user.check_password(self.password.data):
+                raise ValidationError("Неправильный логин или пароль")
+        elif admin:
+            if not admin.check_password(self.password.data):
+                raise ValidationError("Неправильный логин или пароль")
 
 
 class UpdateAccountForm(FlaskForm):
