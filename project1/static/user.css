@@ -1,0 +1,114 @@
+:root {
+    --primary-color: #232222;
+    --text-color: #f9f7f5;
+    --border-color: #232222;
+    --button-bg: #f9f7f5;
+    --button-text: #232222;
+    --shapka-bg: #f9f7f5;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-page {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shapka-container {
+  background-color: var(--shapka-bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 15px;
+  display: flex;
+  justify-content: space-between;  /* Горизонтальное распределение */
+  align-items: center; /* Вертикальное выравнивание */
+  z-index: 1000;  /* Приоритет поверх других */
+}
+
+
+.shapka-field {
+  display: flex;
+  align-items: center;
+ 
+}
+
+.shapka-field:hover .user-logo {
+  transform: translateY(-50%) scale(1.1); /* Увеличение иконки */
+  transition: transform 0.2s ease;
+}
+
+.auth-button {
+    padding: 15px 15px 15px 50px; 
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+}
+
+.shapka-container > .auth-button:last-child {
+  padding-left: 15px; 
+  margin-left: 0; 
+}
+
+.auth-button:hover {
+  transform: translateY(-2px); /* Эффект "поднятия" */
+}
+
+.user-logo {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    margin: auto; 
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.user-logo img {
+    width: 20px;
+    height: 20px;
+}
+
+.user-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-logo img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.user-label {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
