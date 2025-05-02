@@ -27,12 +27,10 @@ body {
   padding: 20px;
   background: 
       linear-gradient(rgba(35, 34, 34, 0.4)), 
-      url('../static/images/background.png') no-repeat center center;
+      url('./../images/background.png') no-repeat center center;
   background-size: cover;
 }
-.red_color{
-  color:red;
-}
+
 .auth-container {
   width: 100%;
   max-width: 400px;
