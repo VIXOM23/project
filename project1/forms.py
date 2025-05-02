@@ -1,7 +1,8 @@
+from flask import Flask
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import RadioField, StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, email
 from project1.models import Admin, User
 
@@ -32,7 +33,7 @@ class LoginFrom(FlaskForm):
     submit = SubmitField("Log In")
 
     
-    def validate_email(self, email):
+    def validate_login(self, email):
         user = User.query.filter_by(email=self.email.data).first()
         admin = Admin.query.filter_by(email = self.email.data).first()
 
@@ -49,6 +50,18 @@ class LoginFrom(FlaskForm):
         elif admin:
             if not admin.check_password(self.password.data):
                 raise ValidationError("Неправильный логин или пароль")
+
+
+class UserFilterForm(FlaskForm):
+    search_type = RadioField("Тип поиска", 
+                             choices=[
+                                ('username', 'Логин'),
+                                ('email', 'Почта'),
+                                ('status', 'Статус'),
+                                ('blocked', 'Заблокированные')
+                             ])
+    search_query = StringField("Запрос", render_kw={"placeholder": "Введите значение для поиска"})
+    submit = SubmitField("Искать")
 
 
 class UpdateAccountForm(FlaskForm):

@@ -33,6 +33,10 @@ class User(BaseUser, db.Model):
     date_started = db.Column(db.DateTime)
     date_end = db.Column(db.DateTime)
     is_blocked = db.Column(db.Boolean(), nullable=False, default=False)
+
+
+    def is_active(self):
+        return self.date_end != None
     
     def get_id(self):
         return f"user:{self.id}"

@@ -10,6 +10,8 @@ with app.app_context():
     # db.session.add(sub)
     # db.session.commit()
     print(Admin.query.all())
-    print(User.query.all())
     # print(Sub.query.all())
-    # pass
+    users = User.query.all()
+    for user in users:
+        print(user.date_end)
+    # passSDFKL;ASDF
