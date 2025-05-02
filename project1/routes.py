@@ -5,7 +5,7 @@ import secrets
 from flask import redirect, render_template, url_for, flash, request, abort
 from wtforms.validators import email
 from project1.forms import (RegistrationForm, LoginFrom, UpdateAccountForm,
-                            RequestResetFrom, ResetPasswordForm, SearchUsers)
+                            RequestResetFrom, ResetPasswordForm, SearchUsers, UserFilterForm)
 from project1 import app, db, bcrypt, mail
 from project1.models import Sub, User, Admin
 from flask_login import login_user, current_user, logout_user, login_required
@@ -45,25 +45,24 @@ def sub_settings():
 @app.route('/user_settings', methods=["GET", "POST"])
 @login_required
 def user_settings():
-    form = SearchUsers()
-    page = request.args.get('page', 1, type=int)
-    all_users = request.args.get('all_users', 0, type=int)
-    users = None
-    links = None
-    if all_users:
-        users = User.query.paginate(page=page, per_page=5)
-        links = users.iter_pages()
     if current_user.get_role() != 'admin':
         abort(403)
-    finded_user = None
+
+    users = None   
+    form = UserFilterForm()
     if form.validate_on_submit():
-        finded_user = User.query.filter_by(username = form.login.data).first()
-    return render_template('admin/user_settings.html',
-                           title='Настройки пользователей',
-                           users = users,
-                           form = form,
-                           finded_user = finded_user,
-                           links=links)
+        search_type = form.search_type.data
+        search_query = form.search_query.data
+        if search_type == 'username':
+            users = User.query.filter(User.username.contains(search_query)).all()
+        elif search_type == 'email':
+            users = User.query.filter_by(email=search_query)
+        elif search_type == 'status':
+            users = User.query.filter(not User.date_end is None)
+        elif search_type == 'blocked':
+            users = User.query.filter_by(is_blocked = True) 
+    return render_template('admin/user_settings.html', users = users, title="Настройки пользователей", form=form)
+
 
 @app.route('/user_pages/<int:user_id>', methods=["GET", "POST"])
 @login_required
@@ -140,23 +139,33 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
-#TODO: Поменять смену информации для админов, возможно сделать функцию для получения пользователя 
 @app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
 
     form = UpdateAccountForm()
     if form.validate_on_submit():
-        user = User.query.get(current_user.id)
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            user.image_file = picture_file  # pyright: ignore
-        # Обновляем данные без app_context (он уже есть)
-        user.username = form.username.data  # pyright: ignore
-        user.email = form.email.data  # pyright: ignore
-        db.session.commit()
-        flash("Аккаунт обновлён!", "success")
-        return redirect(url_for("account"))
+        if current_user.get_role() == 'user':
+            user = User.query.get(current_user.id)
+            if form.picture.data:
+                picture_file = save_picture(form.picture.data)
+                user.image_file = picture_file  # pyright: ignore
+            user.username = form.username.data  # pyright: ignore
+            user.email = form.email.data  # pyright: ignore
+            db.session.commit()
+            flash("Аккаунт обновлён!", "success")
+            return redirect(url_for("account"))
+        elif current_user.get_role() == 'admin':
+
+            user = Admin.query.get(current_user.id)
+            if form.picture.data:
+                picture_file = save_picture(form.picture.data)
+                user.image_file = picture_file  # pyright: ignore
+            user.username = form.username.data  # pyright: ignore
+            user.email = form.email.data  # pyright: ignore
+            db.session.commit()
+            flash("Аккаунт обновлён!", "success")
+            return redirect(url_for("account"))
 
     elif request.method == "GET":
         form.username.data = current_user.username
