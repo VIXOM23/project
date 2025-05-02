@@ -31,6 +31,14 @@ class LoginFrom(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Log In")
 
+    
+    def validate_email(self, email):
+        user = User.query.filter_by(email=self.email.data).first()
+        admin = Admin.query.filter_by(email = self.email.data).first()
+
+        if not user and not admin:
+            raise ValidationError("Пользователь с таким логином не найден")
+
     def validate_password(self, password):
         user = User.query.filter_by(email=self.email.data).first()
         admin = Admin.query.filter_by(email = self.email.data).first()
