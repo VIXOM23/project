@@ -23,7 +23,7 @@
           {% if form.email.errors %}
               <div class="auth-error">
                   {% for error in form.email.errors %}
-                      <span>{{ error }}</span>
+                      <span class = "red_color">{{ error }}</span>
                   {% endfor %}
               </div>
           {% endif %}
@@ -38,7 +38,7 @@
           {% if form.password.errors %}
               <div class="auth-error">
                   {% for error in form.password.errors %}
-                      <span>{{ error }}</span>
+                      <span class = "red_color">{{ error }}</span>
                   {% endfor %}
               </div>
           {% endif %}
@@ -47,9 +47,11 @@
   
   {{ form.submit(class="auth-button") }}
   
-  <a href="#" class="auth-link">Forgot password?</a>
-  
-  <button type="button" class="auth-button">REGISTRATION</button>
+  <a href="{{url_for('reset_request')}}" class="auth-link">Forgot password?</a>
+ 
+<button type="button" onclick="window.location.href= '/register'" class="auth-button">
+  REGISTRATION
+</button>
 </form>
 </div>
 </body>

@@ -92,10 +92,12 @@ def login():
                     next_page = request.args.get('next')
                 
                     return redirect(next_page) if next_page else redirect(url_for('home'))
-            user = Admin.query.filter_by(email=form.email.data).first()
-            if user:
-                if user.check_password(form.password.data):
-                    login_user(user)
+            admin = Admin.query.filter_by(email=form.email.data).first()
+            if admin:
+                if admin.check_password(form.password.data):
+                    login_user(admin)
+                    next_page = request.args.get('next')
+                    return redirect(next_page) if next_page else redirect(url_for('home'))
             flash("Неправильный логин или пароль", 'danger')
     return render_template('login.html', title='login', form=form)
 
@@ -117,7 +119,7 @@ def register():
             db.session.commit()
         flash(f"Аккаунт создан для {form.username.data},{form.email.data}", 'success')
         return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('registration.html', title='Register', form=form)
 
 
 @app.route("/logout")

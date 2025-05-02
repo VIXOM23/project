@@ -9,7 +9,7 @@ with app.app_context():
     # sub = Sub(title='1 year', duration=365, cost=1000)
     # db.session.add(sub)
     # db.session.commit()
-    # print(Admin.query.all())
-    # print(User.query.all())
+    print(Admin.query.all())
+    print(User.query.all())
     # print(Sub.query.all())
-    pass
+    # pass

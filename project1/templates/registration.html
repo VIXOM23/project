@@ -3,52 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./../static/start_pages.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='start_pages.css') }}">
 </head>
 
 <body>
 <div class="auth-wrapper">
-<div class="auth-container">
-  <div class="auth-logo">
-        <img src="./../static/images/logo.svg" alt="Logo">
-  </div>
-  
-  <div class="auth-field">
-      <img src="./../static/images/user.svg" alt="User">
-      <div>
-          <div class="auth-label">USERNAME</div>
-          <input type="text" class="auth-input" placeholder="Enter username">
-      </div>
-  </div>
+    <form method="POST" action="" class="auth-container">
+        {{ form.hidden_tag() }}
+        
+        <div class="auth-logo">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo">
+        </div>
+        
+        <div class="auth-field">
+            <img src="{{ url_for('static', filename='images/user.svg') }}" alt="User">
+            <div>
+                <div class="auth-label">{{ form.username.label }}</div>
+                {{ form.username(class="auth-input", placeholder="Enter username") }}
+                {% if form.username.errors %}
+                    <div class="auth-error">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
 
-  <div class="auth-field">
-    <img src="./../static/images/mail.svg" alt="Lock">
-    <div>
-        <div class="auth-label">EMAIL</div>
-        <input type="password" class="auth-input" placeholder="Enter email">
-    </div>
-</div>
-  
-  <div class="auth-field">
-      <img src="./../static/images/lock.svg" alt="Lock">
-      <div>
-          <div class="auth-label">PASSWORD</div>
-          <input type="password" class="auth-input" placeholder="Enter password">
-      </div>
-  </div>
+        <div class="auth-field">
+            <img src="{{ url_for('static', filename='images/mail.svg') }}" alt="Email">
+            <div>
+                <div class="auth-label">{{ form.email.label }}</div>
+                {{ form.email(class="auth-input", placeholder="Enter email") }}
+                {% if form.email.errors %}
+                    <div class="auth-error">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="auth-field">
+            <img src="{{ url_for('static', filename='images/lock.svg') }}" alt="Lock">
+            <div>
+                <div class="auth-label">{{ form.password.label }}</div>
+                {{ form.password(class="auth-input", placeholder="Enter password") }}
+                {% if form.password.errors %}
+                    <div class="auth-error">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
 
-  <div class="auth-field">
-    <img src="./../static/images/lock.svg" alt="Lock">
-    <div>
-        <div class="auth-label"> CONFIRM PASSWORD</div>
-        <input type="password" class="auth-input" placeholder="Enter password">
-    </div>
-</div>
-  
-  <button type="button" class="auth-button">SUBMIT</button>
-  
-  <button type="button" class="auth-button">ALREADY HAVE AN ACCOUNT</button>
-</div>
+        <div class="auth-field">
+            <img src="{{ url_for('static', filename='images/lock.svg') }}" alt="Lock">
+            <div>
+                <div class="auth-label">{{ form.confirmpassword.label }}</div>
+                {{ form.confirmpassword(class="auth-input", placeholder="Confirm password") }}
+                {% if form.confirmpassword.errors %}
+                    <div class="auth-error">
+                        {% for error in form.confirmpassword.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        {{ form.submit(class="auth-button") }}
+        
+          <button type="button" onclick = "window.location.href= '/login'"class="auth-button">ALREADY HAVE AN ACCOUNT</button>    </form>
 </div>
 </body>
-</html>
+</html>/html>
