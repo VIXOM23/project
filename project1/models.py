@@ -115,9 +115,11 @@ class Sub(db.Model):
     __tablename__ = 'Sub'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable = False, unique=True)
-    duration = db.Column(db.Integer, nullable = False, unique=True)
+    duration_days = db.Column(db.Integer, nullable=False)
+    duration_months = db.Column(db.Integer, nullable=False)
+    duration_years = db.Column(db.Integer, nullable=False)
     cost = db.Column(db.Integer, nullable=False)
     
 
     def __repr__(self) -> str:
-        return f"Sub({self.title}, {self.duration}, {self.cost})"
+        return f"Sub({self.title}, {self.duration_years} лет, {self.duration_months} месяцев, {self.duration_days} дней, {self.cost})"

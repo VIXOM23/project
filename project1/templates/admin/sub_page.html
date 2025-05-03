@@ -1,5 +1,56 @@
 {% extends "layout.html"%}
 
 {% block content %}
-<h1> {{sub}} </h1>
-{% endblock content %}
+<h1> <p>Подписка.</p>
+    <p>Название {{sub.title}} </p>
+    <p> срок дейтствия (дни): {{sub.duration_days}}</p>
+    <p> срок дейтствия (месяцы): {{sub.duration_months}}</p>
+    <p> срок дейтствия (годы): {{sub.duration_years}}</p>
+    <p>стоимость: {{sub.cost}}</p></h1>
+<form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.title.label }}
+            {{form.title}}
+            {% if form.title.errors %}
+                <div class="error m-3">{{ form.title.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.duration_days.label }}
+            {{ form.duration_days}}
+            {% if form.duration_days.errors %}
+                <div class="error">{{ form.duration_days.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.duration_month.label }}
+            {{ form.duration_month}}
+            {% if form.duration_month.errors %}
+ 
+               <div class="error">{{ form.duration_month.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.duration_year.label }}
+            {{ form.duration_year}}
+            {% if form.duration_year.errors %}
+                <div class="error">{{ form.duration_year.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.cost.label }}
+            {{ form.cost}}
+            {% if form.cost.errors %}
+                <div class="error">{{ form.cost.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        {{ form.submit }}
+    </form>
+{% endblock content %}  

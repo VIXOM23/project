@@ -13,4 +13,4 @@ with app.app_context():
     # print(Sub.query.all())
     users = User.query.all()
     print(users)
-    # passSDFKL;ASDF
+    print(Sub.query.all())

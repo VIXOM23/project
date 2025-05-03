@@ -6,7 +6,7 @@ import secrets
 from flask import redirect, render_template, url_for, flash, request, abort
 from wtforms.validators import email
 from project1.forms import (RegistrationForm, LoginFrom, UpdateAccountForm,
-                            RequestResetFrom, ResetPasswordForm, SearchUsers, UserFilterForm,
+                            RequestResetFrom, ResetPasswordForm, SearchUsers, UpdateSubForm, UserFilterForm,
                             UpdateUserInfo)
 from project1 import app, db, bcrypt, mail
 from project1.models import Sub, User, Admin
@@ -31,9 +31,21 @@ def settings():
 @app.route('/settings/subs/sub_<int:sub_id>', methods=["GET", "POST"])
 @login_required
 def sub_page(sub_id):
+    if current_user.get_role() != 'admin':
+        abort(403)
+
     sub = Sub.query.get(sub_id)
+    form = UpdateSubForm()
+    if form.validate_on_submit():
+        sub.title = form.title.data
+        sub.duration_days = form.duration_days.data
+        sub.duration_months = form.duration_month.data
+        sub.duration_years = form.duration_year.data
+        sub.cost = form.cost.data
+        db.session.commit()
     return render_template('admin/sub_page.html', title="Подписка",
-                           sub = sub)
+                           sub = sub,
+                           form = form)
 
 @app.route('/settings/subs', methods=["GET", "POST"])
 @login_required

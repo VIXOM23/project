@@ -127,3 +127,28 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField("Confirm Password", validators=[
         DataRequired(), EqualTo("password")])
     submit = SubmitField("Reset Password")
+
+
+class UpdateSubForm(FlaskForm):
+    title = StringField("Название подписки", validators=[DataRequired()])
+    duration_days = IntegerField("Дни")
+    duration_month = IntegerField("Месяцы")
+    duration_year = IntegerField("Годы")
+    cost = IntegerField("Стоимость")
+
+    submit = SubmitField("Сохранить изменения")
+
+
+    def validate_days(self, duration_days):
+        if duration_days.data >= 31 and duration_days.data < 0:
+            raise ValidationError("Неверное количество дней")
+
+    
+    def validate_month(self, duration_month):
+        if duration_month.data >= 12 and duration_month.data < 0:
+            raise ValidationError("Неверное количество месяцев") 
+
+
+    def validate_year(self, duration_year):
+        if duration_year.data < 0:
+            raise ValidationError("Количество лет не может быть отрицательным")
