@@ -1,0 +1,257 @@
+:root {
+    --primary-color: #232222;
+    --text-color: #f9f7f5;
+    --border-color: #232222;
+    --button-bg: #f9f7f5;
+    --button-text: #232222;
+    --shapka-bg: #f9f7f5;
+    --account-bg: #f9f7f5;
+}
+
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 700px;
+    max-width: 1600px; /* Увеличенная максимальная ширина */
+    padding: 0 20px;
+}
+
+.shapka-container {
+  background-color: var(--shapka-bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 15px;
+  display: flex;
+  justify-content: space-between;  /* Горизонтальное распределение */
+  align-items: center; /* Вертикальное выравнивание */
+  z-index: 1000;  /* Приоритет поверх других */
+}
+
+.shapka-field {
+  display: flex;
+  align-items: center;
+ 
+}
+
+.shapka-field:hover .back-logo {
+  transform: translateY(-50%) scale(1.1); /* Увеличение иконки */
+  transition: transform 0.2s ease;
+}
+
+.shapka-container > .auth-button:last-child {
+  padding-left: 15px; 
+  margin-left: 0; 
+}
+
+.back-logo {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    margin: auto; 
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.back-logo img {
+    width: 20px;
+    height: 20px;
+}
+
+.auth-button {
+    padding: 15px 15px 15px 50px; 
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+}
+
+.auth-button:hover {
+    transform: translateY(-2px); /* Эффект "поднятия" */
+}
+
+
+.content-container {
+display: flex;
+justify-content: center; /* Центрируем дочерние элементы по горизонтали */
+gap: 30px;
+width: 100%;
+max-width: 1600px; /* Ограничиваем максимальную ширину */
+margin: 120px auto 0; /* Центрируем контейнер и добавляем отступ сверху */
+padding: 0 20px; 
+}
+
+.account-container {
+    background-color: var(--account-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    color: #232222;
+    flex: 2;
+    min-width: 950px;
+}
+
+.account-info {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.account-content {
+    display: flex;
+    gap: 20px;
+}
+
+.profile-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.profile-photo img {
+    width: 256px;
+    height: 256px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.info-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.account-label {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.edit-info {
+    margin-top: auto;
+    
+}
+
+.account-button {
+    padding: 15px 30px;
+    color: #232222;
+    background-color: rgb(73, 84, 96, 0.5); 
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-button:hover {
+    transform: translateY(-2px);
+}
+
+.edit-logo {
+    margin-right: 10px;
+}
+
+.edit-logo img {
+    width: 20px;
+    height: 20px;
+}
+
+.subscription-container {
+    border: 1px solid #f9f7f5;
+    border-radius: 10px;
+    padding: 3rem;
+    color: #232222;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-width: 320px;
+}
+
+.subscription-button {
+    background-color: #f9f7f5;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.subscription-label {
+    border: 1px solid #f9f7f5;
+    color: #f9f7f5;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.subscription-button:hover {
+    transform: translateY(-2px);
+}
+
+.subscription-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.subscription-img img {
+    width: 200px;
+    height: 200px;
+}
+
+.subscription-text{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
