@@ -1,62 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./../static/personal_account.css">
-</head>
+{% extends "layout.html"%}
 
-<body>
-<div class="account-page">
+{%block styles%}
 
-    <div class="shapka-container">
-        <div class="shapka-field">
-            <div class="back-logo">
-                <img src="./../static/images/back.svg" alt="Back">
-            </div>
-            <button type="button" class="auth-button">BACK</button>
-        </div>
-        <button type="button" class="auth-button">LOG OUT</button>
-    </div>
-
-    <div class="content-container">
+    <link rel="stylesheet" href="{{url_for('static', filename='personal_account.css')}}">
+{% endblock styles%}
+{%block content%}
+<div class="content-container">
         <div class="account-container">
             <div class="account-info">ACCOUNT INFO</div>
             
             <div class="account-content">
                 <div class="profile-section">
                     <div class="profile-photo">
-                        <img src="./../static/images/user_photo.png" alt="Profile Photo">
+                        <img src="{{url_for('static', filename = 'profile_pics/'+current_user.image_file)}}" alt="Profile Photo">
                         <span>Profile Photo</span>
                     </div>
                 </div>
                 
                 <div class="info-section">
-                    <div class="account-label">USERNAME</div>
-                    <div class="account-label">EMAIL ADDRESS</div>
+                    <div class="account-label">{{current_user.username}}</div>
+                    <div class="account-label">{{current_user.email}}</div>
                     
-                    <div class="edit-info">
+                    <a href = "{{url_for('edit_account_info', user = current_user)}}"><div class="edit-info">
                         <button type="button" class="account-button">
                             <div class="edit-logo">
-                                <img src="./../static/images/edit-line.svg" alt="Edit">
+                                <img src="{{url_for('static', filename='images/edit-line.svg')}}" alt="Edit">
                             </div>
                             EDIT ACCOUNT INFO
                         </button>
+                    </a>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="subscription-container">
-            <button type="button" class="subscription-button">
+            <a href = "{{url_for('subs_shop')}}"><button type="button" class="subscription-button">
                 <div class="subscription-img">
                     <img src="./../static/images/subscription.svg" alt="Subscription">
                 </div>
                 <span class="subscription-text">Subscription</span>
-            </button>
-            <div class="subscription-label">STATUS</div>
+            </button></a>
+            <div class="subscription-label">
+                {% if current_user.get_role() == 'user' %}
+                {% if current_user.is_active() %} ACTIVE: till {{current_user.date_end}}{% else %} DISABLED {%endif%}
+                {%else%}
+                ACTIVE
+                {%endif%}
+            </div>
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock content%}
