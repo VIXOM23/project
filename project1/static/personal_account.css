@@ -100,14 +100,18 @@ a {
     transform: translateY(-2px); /* Эффект "поднятия" */
 }
 
+
+.content-container {
+display: flex;
+justify-content: center; /* Центрируем дочерние элементы по горизонтали */
+gap: 30px;
+width: 100%;
+max-width: 1600px; /* Ограничиваем максимальную ширину */
+margin: 120px auto 0; /* Центрируем контейнер и добавляем отступ сверху */
+padding: 0 20px; 
+}
+
 .account-container {
-    display: flex;
-    justify-content: center; /* Центрируем дочерние элементы по горизонтали */
-    gap: 30px;
-    width: 100%;
-    max-width: 1600px; /* Ограничиваем максимальную ширину */
-    margin: 120px auto 0; /* Центрируем контейнер и добавляем отступ сверху */
-    padding: 0 20px; 
     background-color: var(--account-bg);
     border-radius: 10px;
     padding: 2rem;
