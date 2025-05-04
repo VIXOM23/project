@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block styles%}
     <link rel="stylesheet" href="./../static/edit_account.css">
-</head>
-
-<body>
-<div class="account-page">
-
-    <div class="shapka-container">
-        <div class="shapka-field">
+    {% endblock styles%}
+{% extends "layout.html"%}
+{% block links %}
+<div class="shapka-field">
             <div class="back-logo">
                 <img src="./../static/images/back.svg" alt="Back">
             </div>
-            <button type="button" class="auth-button">BACK</button>
+            <a href = "{{url_for('account')}}" <button type="button" class="auth-button">BACK</button></a>
         </div>
-        <button type="button" class="auth-button">LOG OUT</button>
-    </div>
+      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button">LOG OUT</button></a>
 
 
+
+{% endblock links%}
+{%block content%}
 <form method="POST" enctype="multipart/form-data">
     {{form.hidden_tag()}}
     <div class="content-container">
@@ -69,5 +64,6 @@
 
 </div>
 </form>
+{% endblock content%}
 </body>
 </html>

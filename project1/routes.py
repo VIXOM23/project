@@ -185,21 +185,23 @@ def edit_account_info():
     form = UpdateAccountForm()
 
     if form.validate_on_submit():
+        
         if current_user.get_role() == 'user':
             user = User.query.get(current_user.id)
-            user.username = form.username.data  # pyright: ignore
-            user.email = form.email.data  # pyright: ignore
-            db.session.commit()
-            flash("Аккаунт обновлён!", "success")
-            return redirect(url_for("account"))
         elif current_user.get_role() == 'admin':
-
             user = Admin.query.get(current_user.id)
-            user.username = form.username.data  # pyright: ignore
-            user.email = form.email.data  # pyright: ignore
-            db.session.commit()
-            flash("Аккаунт обновлён!", "success")
-            return redirect(url_for("account"))
+        if 'profile_photo' in request.files:
+            if request.files['profile_photo'].filename != '':
+                picture_file = save_picture(request.files['profile_photo'])
+                user.image_file = picture_file # pyright:ignore
+        user.username = form.username.data  # pyright: ignore
+        user.email = form.email.data  # pyright: ignore
+        if form.password.data != None:
+            user.set_password(form.password.data)
+        db.session.commit()
+
+        return redirect(url_for("account"))
+
     if request.method == "GET":
         form.email.data = current_user.email
         form.username.data = current_user.username
