@@ -50,7 +50,7 @@ def sub_page(sub_id):
 
 @app.route('/settings/subs', methods=["GET", "POST"])
 @login_required
-def sub_settings():
+def sub_settings(): 
     if current_user.get_role() != 'admin':
         abort(403)
     subs = Sub.query.all()

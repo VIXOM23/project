@@ -96,8 +96,11 @@ class UpdateAccountForm(FlaskForm):
                                   render_kw={"placeholder": "NEW PASSWORD", "class": "account-input"})
     submit = SubmitField("Apply Chandes",
                          render_kw={'class': 'account-button'})
-
+    
+    def validate_password(self, password):
+        pass
     def validate_username(self, username):
+        
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:

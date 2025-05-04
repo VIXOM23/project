@@ -1,4 +1,11 @@
 {% extends "layout.html"%}
+{% block styles %}
+        {% if current_user.get_role() == 'admin'%}
+    <link rel="stylesheet" href="{{url_for('static', filename='admin_main_page.css')}}">
+        {% else %}
+    <link rel="stylesheet" href="{{url_for('static', filename='user.css')}}">
+        {% endif %}
+{% endblock styles %}
 {% block links %}
 <div class="shapka-field">
         <div class="user-logo">
@@ -8,7 +15,7 @@
         <a href = "{{url_for('account')}}"><button type="button" class="auth-button">PERSONAL ACCOUNT</button></a>
       </div>
 
-      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button">LOG OUT</button></a>
+      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
       {% if current_user.get_role() == 'admin'%}
       <a href = "{{url_for('settings')}}"><button type="button" class="auth-button">SETTINGS</button></a>
     {% else %}
