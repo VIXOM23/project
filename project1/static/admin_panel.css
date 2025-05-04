@@ -1,0 +1,139 @@
+:root {
+    --primary-color: #232222;
+    --text-color: #f9f7f5;
+    --border-color: #232222;
+    --button-bg: #f9f7f5;
+    --button-text: #232222;
+    --shapka-bg: #f9f7f5;
+    --account-bg: #f9f7f5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Увеличенная ширина */
+    min-height: 800px; /* Увеличенная высота */
+    padding: 0 40px; /* Большие отступы по бокам */
+}
+
+.shapka-container {
+    background-color: var(--shapka-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: space-between;  /* Горизонтальное распределение */
+    align-items: center; /* Вертикальное выравнивание */
+    z-index: 1000;  /* Приоритет поверх других */
+  }
+  
+  .shapka-field {
+    display: flex;
+    align-items: center;
+   
+  }
+  
+  .shapka-field:hover .back-logo {
+    transform: translateY(-50%) scale(1.1); /* Увеличение иконки */
+    transition: transform 0.2s ease;
+  }
+  
+  .shapka-container > .auth-button:last-child {
+    padding-left: 15px; 
+    margin-left: 0; 
+  }
+  
+  .back-logo {
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      margin: auto; 
+      transform: translateY(-50%);
+      z-index: 1;
+  }
+  
+  .back-logo img {
+      width: 20px;
+      height: 20px;
+  }
+  
+  .auth-button {
+      padding: 15px 15px 15px 50px; 
+      color: var(--button-text);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      position: relative;
+  }
+  
+  .auth-button:hover {
+      transform: translateY(-2px); /* Эффект "поднятия" */
+  }
+  
+
+.content-container {
+    background-color: var(--account-bg);
+    border-radius: 15px;
+    padding: 60px; 
+    margin-top: 100px; 
+    color: var(--button-text);
+    width: 100%;
+    min-height: 600px; 
+}
+
+.admin-header {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 60px; 
+    color: var(--button-text);
+    font-weight: 500;
+}
+
+.admin-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; 
+    max-width: 800px;
+    margin: 0 auto; 
+}
+
+.admin-button {
+    background-color: rgb(169, 158, 244, 0.5); 
+    padding: 25px 40px; 
+    color: var(--button-text);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-button:hover {
+    transform: translateY(-5px);
+}

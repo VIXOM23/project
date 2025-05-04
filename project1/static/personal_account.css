@@ -105,10 +105,10 @@ a {
 display: flex;
 justify-content: center; /* Центрируем дочерние элементы по горизонтали */
 gap: 30px;
+margin-top: 100px; 
 width: 100%;
 max-width: 1600px; /* Ограничиваем максимальную ширину */
-margin: 120px auto 0; /* Центрируем контейнер и добавляем отступ сверху */
-padding: 0 20px; 
+padding: 0 40px; 
 }
 
 .account-container {
