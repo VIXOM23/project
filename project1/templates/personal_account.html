@@ -1,4 +1,19 @@
 {% extends "layout.html"%}
+{% block links%}
+<div class="shapka-field">
+        <div class="user-logo">
+            <img src="{{url_for('static', filename='images/user_black.svg')}}" alt="User">
+        </div>
+        
+        <a href = "{{url_for('home')}}"><button type="button" class="auth-button">HOME</button></a>
+      </div>
+
+      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
+      {% if current_user.get_role() == 'admin'%}
+      <a href = "{{url_for('settings')}}"><button type="button" class="auth-button">SETTINGS</button></a>
+    {% else %}
+    {% endif%}
+    {% endblock links %}
 
 
 {%block styles%}

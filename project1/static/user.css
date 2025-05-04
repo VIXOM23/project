@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
   }
-  
+
   
   body {
     font-family: 'Montserrat', sans-serif;
@@ -93,7 +93,10 @@
     width: 20px;
     height: 20px;
 }
-
+.s1 {
+  padding-left: 15px; 
+  margin-left: 0; 
+}
 .user-container {
     width: 100%;
     text-align: center;

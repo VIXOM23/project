@@ -99,7 +99,10 @@ a {
 .auth-button:hover {
     transform: translateY(-2px); /* Эффект "поднятия" */
 }
-
+.s1 {
+  padding-left: 15px; 
+  margin-left: 0; 
+}
 
 .content-container {
 display: flex;

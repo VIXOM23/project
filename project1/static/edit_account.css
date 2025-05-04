@@ -174,7 +174,10 @@
     padding-left: 100px; 
     padding-right: 100px; 
 }
-
+.s1 {
+  padding-left: 15px; 
+  margin-left: 0; 
+}
 .account-button {
     padding: 10px 20px;
     color: #232222;
