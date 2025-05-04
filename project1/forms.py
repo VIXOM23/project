@@ -4,7 +4,7 @@ from flask_wtf.file import FileField, FileAllowed
 import wtforms
 from flask_login import current_user
 from wtforms import DateField, IntegerField, RadioField, StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, email
+from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional, ValidationError, email
 
 from project1.models import Admin, User
 
@@ -30,7 +30,7 @@ class RegistrationForm(FlaskForm):
 
 
 class UpdateUserInfo(FlaskForm):
-    date_end = DateField("Конец пользования подписки")
+    date_end = DateField("Конец пользования подписки", validators=[Optional()])
     is_blocked = BooleanField("Заблокировать")
     lasts = IntegerField("Оставшиеся попытки")
     submit = SubmitField("Подтвердить изменения")
@@ -60,11 +60,12 @@ class LoginFrom(FlaskForm):
         admin = Admin.query.filter_by(email = self.email.data).first()
 
         if user:
+ 
             if not user.check_password(self.password.data):
-                raise ValidationError("Неправильный логин или пароль")
+                raise ValidationError("Неправильный логин или пароль!")
         elif admin:
             if not admin.check_password(self.password.data):
-                raise ValidationError("Неправильный логин или пароль")
+                raise ValidationError("Неправильный логин или пароль!")
 
 
 class UserFilterForm(FlaskForm):
@@ -90,15 +91,27 @@ class UpdateAccountForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()],
                          render_kw={"placeholder": "EMAIL ADDRESS", "class": "account-input"})
     password = StringField("PASSWORD", validators=[],
-                           render_kw={"placeholder": "YOUR PASSWORD", "class": "account-input"})
-    confirm_password = StringField("CONFIRM PASsWORD", validators=[
-                                                                   EqualTo('password')],
-                                  render_kw={"placeholder": "NEW PASSWORD", "class": "account-input"})
+                           render_kw={"placeholder": "YOUR PASSWORD", "class": "account-input",
+                                      "type" : "password"})
+    confirm_password = StringField("CONFIRM PASsWORD", validators=[DataRequired()],
+                                  render_kw={"placeholder": "NEW PASSWORD", "class": "account-input", 
+                                             "type" : "password"})
     submit = SubmitField("Apply Chandes",
                          render_kw={'class': 'account-button'})
     
     def validate_password(self, password):
+<<<<<<< HEAD
         pass
+=======
+        user = User.query.get(current_user.id)
+        admin = User.query.get(current_user.id)
+        if user:
+            if not user.check_password(self.password.data):
+                raise ValidationError("Неверный пароль")
+        if admin:
+            if not admin.check_password(self.password.data):
+                raise ValidationError("Неверный пароль")
+>>>>>>> 5afb5efed6fe603bd84e0ad8988d1ba23de83123
     def validate_username(self, username):
         
         if username.data != current_user.username:
