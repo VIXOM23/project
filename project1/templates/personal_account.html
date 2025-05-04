@@ -22,7 +22,7 @@
                     <div class="account-label">{{current_user.username}}</div>
                     <div class="account-label">{{current_user.email}}</div>
                     
-                    <a href = "{{url_for('edit_account_info', user = current_user)}}"><div class="edit-info">
+                    <a href = "{{url_for('edit_account_info')}}"><div class="edit-info">
                         <button type="button" class="account-button">
                             <div class="edit-logo">
                                 <img src="{{url_for('static', filename='images/edit-line.svg')}}" alt="Edit">

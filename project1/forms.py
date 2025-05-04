@@ -40,6 +40,8 @@ class UpdateUserInfo(FlaskForm):
         if lasts.data >= 10:
             raise ValidationError("Количество разрешенных доступов слишком большое")
 
+
+
 class LoginFrom(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
@@ -83,11 +85,16 @@ class UserFilterForm(FlaskForm):
 
 class UpdateAccountForm(FlaskForm):
     username = StringField("Username", validators=[
-                           DataRequired(), Length(min=2, max=20)])
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    picture = FileField("Обновить фото профиля", validators=[
-                        FileAllowed(['jpg', 'png'])])
-    submit = SubmitField("Update")
+                           DataRequired(), Length(min=2, max=20)],
+                          render_kw={"placeholder": "USERNAME", "class": "account-input"})
+    email = StringField("Email", validators=[DataRequired(), Email()],
+                         render_kw={"placeholder": "EMAIL ADDRESS", "class": "account-input"})
+    password = StringField("PASSWORD", validators=[DataRequired()],
+                           render_kw={"placeholder": "YOUR PASSWORD", "class": "account-input"})
+    confirm_password = StringField("CONFIRM PASsWORD", validators=[DataRequired(),
+                                                                   EqualTo('password')],
+                                  render_kw={"placeholder": "NEW PASSWORD", "class": "account-input"})
+    submit = SubmitField("Apply Chandes")
 
     def validate_username(self, username):
         if username.data != current_user.username:

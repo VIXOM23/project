@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./../static/edit_account.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='edit_account.css')}}">
 </head>
 
 <body>
@@ -20,31 +20,37 @@
     </div>
 
     <div class="content-container">
-        <div class="account-container">
-            <div class="account-info">EDIT ACCOUNT INFO</div>
-            
-            <div class="account-content">
+    <div class="account-container">
+        <div class="account-info">EDIT ACCOUNT INFO</div>
+        
+        <div class="account-content">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                
                 <div class="profile-section">
                     <div class="profile-photo">
-                        <img src="./../static/images/user_photo.png" alt="Profile Photo">
+                        <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" alt="Profile Photo">
                         <span>Click to change photo</span>
+                        <input type="file" name="profile_photo" style="display: none;">
                     </div>
                 </div>
                 
                 <div class="info-section">
-                    <input type="text" class="account-input" placeholder="USERNAME">
-                    <input type="email" class="account-input" placeholder="EMAIL ADDRESS">
-                    <input type="password" class="account-input" placeholder="YOUR PASSWORD">
-                    <input type="password" class="account-input" placeholder="NEW PASSWORD">
+                    {{ form.username() }}
+                    {{ form.email() }}
+                    {{ form.password() }}
+                    {{ form.confirm_password() }}
                 </div>
                 
-                </div>
                 <div class="edit-info">
                     <button type="button" class="account-button">Discard changes</button>
-                    <button type="button" class="account-button">Apply changes</button>
+                    {{form.submit(class = 'account-button')}}
                 </div>
-            </div>
+
+            </form>
         </div>
+    </div>
+</div>
 </div>
 </body>
 </html>

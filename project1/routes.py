@@ -182,7 +182,8 @@ def subs_shop():
 @app.route('/account/edit', methods = ["GET", "POST"])
 @login_required
 def edit_account_info():
-    return "<h1> Обновление аккаунта </h1>"
+    form = UpdateAccountForm()
+    return render_template('edit_account.html', title="Изменение данных аккаунта", form = form)
 
 
 @app.route("/account", methods=["GET", "POST"])

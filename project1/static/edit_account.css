@@ -8,68 +8,39 @@
     --account-bg: #f9f7f5;
 }
 
-  
-  * {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
-  
-  body {
+}
+
+body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--primary-color);
     color: var(--text-color);
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-.account-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    min-height: 700px;
-    max-width: 1600px; /* Увеличенная максимальная ширина */
-    padding: 0 20px;
-}
-
+/* Шапка */
 .shapka-container {
-  background-color: var(--shapka-bg);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 20px 15px;
-  display: flex;
-  justify-content: space-between;  /* Горизонтальное распределение */
-  align-items: center; /* Вертикальное выравнивание */
-  z-index: 1000;  /* Приоритет поверх других */
-}
-
-.shapka-field {
-  display: flex;
-  align-items: center;
- 
-}
-
-.shapka-field:hover .back-logo {
-  transform: translateY(-50%) scale(1.1); /* Увеличение иконки */
-  transition: transform 0.2s ease;
-}
-
-.shapka-container > .auth-button:last-child {
-  padding-left: 15px; 
-  margin-left: 0; 
+    background-color: var(--shapka-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
 }
 
 .back-logo {
     position: absolute;
     left: 30px;
     top: 50%;
-    margin: auto; 
     transform: translateY(-50%);
     z-index: 1;
 }
@@ -80,61 +51,65 @@
 }
 
 .auth-button {
-    padding: 15px 15px 15px 50px; 
+    padding: 15px 15px 15px 50px;
     color: var(--button-text);
     border: 1px solid var(--border-color);
     border-radius: 5px;
     font-size: 1rem;
-    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-align: left;
     position: relative;
 }
 
-.auth-button:hover {
-    transform: translateY(-2px); /* Эффект "поднятия" */
+/* Основной контент */
+.account-page {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 120px;
+    padding: 20px;
 }
-
 
 .content-container {
     display: flex;
-    justify-content: center; /* Центрируем дочерние элементы по горизонтали */
-    gap: 30px;
+    justify-content: center;
     width: 100%;
-    max-width: 1600px; /* Ограничиваем максимальную ширину */
-    margin: 120px auto 0; /* Центрируем контейнер и добавляем отступ сверху */
-    padding: 0 20px; 
 }
 
 .account-container {
     background-color: var(--account-bg);
     border-radius: 10px;
     padding: 2rem;
-    color: #232222;
-    flex: 2;
-    min-width: 950px;
+    color: var(--button-text);
+    width: 100%;
+    max-width: 950px;
 }
 
 .account-info {
     font-size: 2rem;
-    font-weight: 500;
     margin-bottom: 2rem;
     text-align: center;
+    color: var(--primary-color);
 }
 
+/* Двухколоночный макет */
 .account-content {
     display: flex;
-    gap: 20px;
+    gap: 50px;
 }
 
 .profile-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex: 0 0 300px;
+    position: sticky;
+    top: 140px;
+    height: fit-content;
 }
 
+.info-section {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Стили для фото профиля */
 .profile-photo {
     display: flex;
     flex-direction: column;
@@ -148,65 +123,19 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 1rem;
+    transition: opacity 0.3s ease;
 }
 
-.info-section {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
+.profile-photo:hover img {
+    opacity: 0.8;
 }
 
-.account-label {
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1.5rem;
-    width: 100%;
-    font-size: 1.2rem;
+.profile-photo span {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
 }
 
-.edit-info {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between; 
-    width: 100%;           
-    padding-top: 20px; 
-    padding-left: 100px; 
-    padding-right: 100px; 
-}
-
-.account-button {
-    padding: 10px 20px;
-    color: #232222;
-    background-color: rgb(73, 84, 96, 0.5); 
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 150px;            
-    text-align: center;
-    margin: 0; 
-}
-
-.account-button:last-child{
-    background-color: rgb(169, 158, 244, 0.5); 
-    margin-left: 0; 
-}
-
-.account-button:hover {
-    transform: translateY(-2px);
-}
-
-.edit-logo {
-    margin-right: 10px;
-}
-
-.edit-logo img {
-    width: 20px;
-    height: 20px;
-}
-
+/* Стили формы */
 .account-input {
     width: 100%;
     padding: 1.2rem 1.5rem;
@@ -215,56 +144,57 @@
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
     background-color: var(--account-bg);
-    color: var(--button-text);
-}
-
-.account-input::placeholder {
-    color: var(--button-text); 
-    opacity: 1; 
+    color: var(--primary-color);
 }
 
 .account-input:focus {
     outline: none;
-    border-color: rgb(169, 158, 244, 0.5); 
+    border-color: rgba(169, 158, 244, 0.5);
 }
 
-.account-input:focus::placeholder {
-    color: transparent; /* Плейсхолдер исчезает при фокусе */
-}
-
-/* Это наметки для стилей изменения фото профиля */
-
-.profile-photo {
-    position: relative;
-    cursor: pointer;
-}
-
-.avatar-upload-label {
+/* Кнопки */
+.edit-info {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.account-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.2rem;
     cursor: pointer;
-}
-
-.upload-text {
-    margin-top: 10px;
-    color: #232323;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
-
-.profile-photo:hover .upload-text {
-    color: #a99ef4;
-}
-
-#avatar-preview {
-    width: 256px;
-    height: 256px;
-    border-radius: 50%;
-    object-fit: cover;
     transition: all 0.3s ease;
+    flex: 1;
 }
 
-.profile-photo:hover #avatar-preview {
-    opacity: 0.8;
+.account-button:first-child {
+    background-color: rgba(73, 84, 96, 0.5);
+}
+
+.account-button:last-child {
+    background-color: rgba(169, 158, 244, 0.5);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .account-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .profile-section {
+        position: static;
+        flex: 0 0 auto;
+    }
+    
+    .profile-photo img {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .edit-info {
+        flex-direction: column;
+    }
 }
