@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='edit_account.css')}}">
+    <link rel="stylesheet" href="./../static/edit_account.css">
 </head>
 
 <body>
+<form method="POST" enctype="multipart/form-data">
+        <input id="csrf_token" name="csrf_token" type="hidden" value="IjU1Zjg1NWQxY2ZkZDE4ZjQ5MmY2N2M3YTlhOTRmYjUzNjgzYWFhNTUi.aBc26w.8W7aodsPch238LCCZv3ilNN4lOY">
 <div class="account-page">
 
     <div class="shapka-container">
@@ -19,38 +21,37 @@
         <button type="button" class="auth-button">LOG OUT</button>
     </div>
 
+
     <div class="content-container">
-    <div class="account-container">
-        <div class="account-info">EDIT ACCOUNT INFO</div>
-        
-        <div class="account-content">
-            <form method="POST" enctype="multipart/form-data">
-                {{ form.hidden_tag() }}
+        <div class="account-container">
+            <div class="account-info">EDIT ACCOUNT INFO</div>
+            
+            <div class="account-content">
                 
                 <div class="profile-section">
                     <div class="profile-photo">
-                        <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" alt="Profile Photo">
+                        <img src="./../static/images/user_photo.png" alt="Profile Photo">
                         <span>Click to change photo</span>
                         <input type="file" name="profile_photo" style="display: none;">
                     </div>
                 </div>
                 
                 <div class="info-section">
-                    {{ form.username() }}
-                    {{ form.email() }}
-                    {{ form.password() }}
-                    {{ form.confirm_password() }}
+                    <input class="account-input" id="username" maxlength="20" minlength="2" name="username" placeholder="USERNAME" required type="text" value="asd">
+                    <input class="account-input" id="email" name="email" placeholder="EMAIL ADDRESS" required type="text" value="asd">
+                    <input class="account-input" id="password" name="password" placeholder="YOUR PASSWORD" required type="text" value="asd">
+                    <input class="account-input" id="confirm_password" name="confirm_password" placeholder="NEW PASSWORD" required type="text" value="asdd">
                 </div>
                 
+                </div>
                 <div class="edit-info">
                     <button type="button" class="account-button">Discard changes</button>
-                    {{form.submit(class = 'account-button')}}
+                    <input class="account-button" id="submit" name="submit" type="submit" value="Apply Chandes">
                 </div>
-
-            </form>
+            </div>
         </div>
-    </div>
+
 </div>
-</div>
+</form>
 </body>
 </html>
