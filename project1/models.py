@@ -32,6 +32,7 @@ class User(BaseUser, db.Model):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     date_started = db.Column(db.DateTime)
     date_end = db.Column(db.DateTime)
+    lasts = db.Column(db.Integer, default = 5)
     is_blocked = db.Column(db.Boolean(), nullable=False, default=False)
 
 

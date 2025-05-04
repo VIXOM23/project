@@ -79,7 +79,9 @@ def user_settings():
         elif search_type == 'subscribe':
             users = User.query.filter(User.date_end.isnot(None)).all()
         elif search_type == 'blocked':
-            users = User.query.filter_by(is_blocked = True) 
+            users = User.query.filter_by(is_blocked = True)
+        elif search_type == 'has_access':
+            users = User.query.filter(User.lasts > 0)
     return render_template('admin/user_settings.html', users = users, title="Настройки пользователей", form=form)
 
 
@@ -89,9 +91,11 @@ def user_pages(user_id):
     if current_user.get_role() != 'admin':
         abort(403)
     form = UpdateUserInfo()
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
     if form.validate_on_submit():
+        print(form.date_end.data, "HKAJGKJHGDJKHSGKDJHS")   
         user = User.query.get(int(user_id))
+        
         user.date_end = form.date_end.data
         user.is_blocked = form.is_blocked.data
         db.session.commit()
@@ -115,21 +119,21 @@ def login():
 
     form = LoginFrom()
     if form.validate_on_submit():
-        with app.app_context():
-            user = User.query.filter_by(email=form.email.data).first()
-            if user:
-                if user.check_password(form.password.data):
-                    login_user(user)
-                    next_page = request.args.get('next')
-                
-                    return redirect(next_page) if next_page else redirect(url_for('home'))
-            admin = Admin.query.filter_by(email=form.email.data).first()
-            if admin:
-                if admin.check_password(form.password.data):
-                    login_user(admin)
-                    next_page = request.args.get('next')
-                    return redirect(next_page) if next_page else redirect(url_for('home'))
-            flash("Неправильный логин или пароль", 'danger')
+        user = User.query.filter_by(email=form.email.data).first()
+        print(user, "USEEEER")
+        if user:
+            
+            if user.check_password(form.password.data):
+                login_user(user)
+                next_page = request.args.get('next')
+            
+                return redirect(next_page) if next_page else redirect(url_for('home'))
+        admin = Admin.query.filter_by(email=form.email.data).first()
+        if admin:
+            if admin.check_password(form.password.data):
+                login_user(admin)
+                next_page = request.args.get('next')
+                return redirect(next_page) if next_page else redirect(url_for('home'))
     return render_template('login.html', title='login', form=form)
 
 
@@ -197,7 +201,7 @@ def edit_account_info():
         user.username = form.username.data  # pyright: ignore
         user.email = form.email.data  # pyright: ignore
         if form.password.data != None:
-            user.set_password(form.password.data)
+            user.set_password(form.confirm_password.data) #pyright:ignore
         db.session.commit()
 
         return redirect(url_for("account"))
