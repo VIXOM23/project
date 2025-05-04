@@ -181,8 +181,7 @@ def save_picture(form_picture):
 @login_required
 def subs_shop():
 
-    return "<h1>Страница магазина подписок</h1>"
-
+    return render_template("user_subscription.html", title = "Подписка")
 @app.route('/account/edit', methods = ["GET", "POST"])
 @login_required
 def edit_account_info():
@@ -201,11 +200,7 @@ def edit_account_info():
         user.username = form.username.data  # pyright: ignore
         user.email = form.email.data  # pyright: ignore
         if form.password.data != None:
-<<<<<<< HEAD
-            user.set_password(form.password.data)
-=======
             user.set_password(form.confirm_password.data) #pyright:ignore
->>>>>>> 5afb5efed6fe603bd84e0ad8988d1ba23de83123
         db.session.commit()
 
         return redirect(url_for("account"))
