@@ -1,3 +1,4 @@
+from logging import log
 from random import choice
 from Demos.win32ts_logoff_disconnected import username
 from PIL import Image
@@ -164,46 +165,60 @@ def save_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(
         app.root_path, 'static/profile_pics', picture_fn)
-    output_size = (125, 125)
+    output_size = (256, 256)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
     return picture_fn
 
+
+
+@app.route('/subs-shop', methods = ["GET", "POST"])
+@login_required
+def subs_shop():
+
+    return "<h1>Страница магазина подписок</h1>"
+
+@app.route('/account/edit', methods = ["GET", "POST"])
+@login_required
+def edit_account_info():
+    return "<h1> Обновление аккаунта </h1>"
+
+
 @app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
 
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        if current_user.get_role() == 'user':
-            user = User.query.get(current_user.id)
-            if form.picture.data:
-                picture_file = save_picture(form.picture.data)
-                user.image_file = picture_file  # pyright: ignore
-            user.username = form.username.data  # pyright: ignore
-            user.email = form.email.data  # pyright: ignore
-            db.session.commit()
-            flash("Аккаунт обновлён!", "success")
-            return redirect(url_for("account"))
-        elif current_user.get_role() == 'admin':
-
-            user = Admin.query.get(current_user.id)
-            if form.picture.data:
-                picture_file = save_picture(form.picture.data)
-                user.image_file = picture_file  # pyright: ignore
-            user.username = form.username.data  # pyright: ignore
-            user.email = form.email.data  # pyright: ignore
-            db.session.commit()
-            flash("Аккаунт обновлён!", "success")
-            return redirect(url_for("account"))
-
-    elif request.method == "GET":
-        form.username.data = current_user.username
-        form.email.data = current_user.email
+    # form = UpdateAccountForm()
+    # if form.validate_on_submit():
+    #     if current_user.get_role() == 'user':
+    #         user = User.query.get(current_user.id)
+    #         if form.picture.data:
+    #             picture_file = save_picture(form.picture.data)
+    #             user.image_file = picture_file  # pyright: ignore
+    #         user.username = form.username.data  # pyright: ignore
+    #         user.email = form.email.data  # pyright: ignore
+    #         db.session.commit()
+    #         flash("Аккаунт обновлён!", "success")
+    #         return redirect(url_for("account"))
+    #     elif current_user.get_role() == 'admin':
+    #
+    #         user = Admin.query.get(current_user.id)
+    #         if form.picture.data:
+    #             picture_file = save_picture(form.picture.data)
+    #             user.image_file = picture_file  # pyright: ignore
+    #         user.username = form.username.data  # pyright: ignore
+    #         user.email = form.email.data  # pyright: ignore
+    #         db.session.commit()
+    #         flash("Аккаунт обновлён!", "success")
+    #         return redirect(url_for("account"))
+    #
+    # elif request.method == "GET":
+    #     form.username.data = current_user.username
+    #     form.email.data = current_user.email
     image_file = url_for(
         'static', filename='profile_pics/' + current_user.image_file)
-    return render_template("account.html", title='Account', image_file=image_file, form=form)
+    return render_template("personal_account.html", title='Account', image_file=image_file)
 
 
 def send_reset_email(user):

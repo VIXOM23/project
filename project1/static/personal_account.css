@@ -14,9 +14,13 @@
     margin: 0;
     padding: 0;
   }
-  
-  
-  body {
+a.text:active, /* активная/посещенная ссылка */
+a.text:hover,  /* при наведении */
+a {
+  text-decoration: none !important;
+  color: #666;
+
+}  body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--primary-color);
     color: var(--text-color);
