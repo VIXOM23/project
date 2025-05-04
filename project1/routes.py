@@ -183,6 +183,26 @@ def subs_shop():
 @login_required
 def edit_account_info():
     form = UpdateAccountForm()
+
+    if form.validate_on_submit():
+        if current_user.get_role() == 'user':
+            user = User.query.get(current_user.id)
+            user.username = form.username.data  # pyright: ignore
+            user.email = form.email.data  # pyright: ignore
+            db.session.commit()
+            flash("Аккаунт обновлён!", "success")
+            return redirect(url_for("account"))
+        elif current_user.get_role() == 'admin':
+
+            user = Admin.query.get(current_user.id)
+            user.username = form.username.data  # pyright: ignore
+            user.email = form.email.data  # pyright: ignore
+            db.session.commit()
+            flash("Аккаунт обновлён!", "success")
+            return redirect(url_for("account"))
+    if request.method == "GET":
+        form.email.data = current_user.email
+        form.username.data = current_user.username
     return render_template('edit_account.html', title="Изменение данных аккаунта", form = form)
 
 

@@ -89,12 +89,13 @@ class UpdateAccountForm(FlaskForm):
                           render_kw={"placeholder": "USERNAME", "class": "account-input"})
     email = StringField("Email", validators=[DataRequired(), Email()],
                          render_kw={"placeholder": "EMAIL ADDRESS", "class": "account-input"})
-    password = StringField("PASSWORD", validators=[DataRequired()],
+    password = StringField("PASSWORD", validators=[],
                            render_kw={"placeholder": "YOUR PASSWORD", "class": "account-input"})
-    confirm_password = StringField("CONFIRM PASsWORD", validators=[DataRequired(),
+    confirm_password = StringField("CONFIRM PASsWORD", validators=[
                                                                    EqualTo('password')],
                                   render_kw={"placeholder": "NEW PASSWORD", "class": "account-input"})
-    submit = SubmitField("Apply Chandes")
+    submit = SubmitField("Apply Chandes",
+                         render_kw={'class': 'account-button'})
 
     def validate_username(self, username):
         if username.data != current_user.username:
