@@ -1,29 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "layout.html"%}
+    {% block styles%}
     <link rel="stylesheet" href="./../../static/admin_panel.css">
-</head>
-<body>
-<div class="admin-panel">
-    <div class="shapka-container">
+    {% endblock styles%}
+        {%block links%}
         <div class="shapka-field">
             <div class="back-logo">
                 <img src="./../../static/images/back.svg" alt="Back">
             </div>
-            <button type="button" class="auth-button">BACK</button>
+            <a href = "{{url_for('home')}}" <button type="button" class="auth-button">BACK</button></a>
         </div>
-        <button type="button" class="auth-button">LOG OUT</button>
-    </div>
-
+        <a href = "{{url_for('logout')}}"> <button type="button" class="auth-button">LOG OUT</button></a>
+        {% endblock links %}
+    {% block content %}
     <div class="content-container">
         <div class="admin-header">ADMIN PANEL</div>
         <div class="admin-buttons-container">
-            <button type="button" class="admin-button">USER'S SETTINGS</button>
-            <button type="button" class="admin-button">SUBSCRIPTIONS' SETTINGS</button>
+            <a href = "{{url_for('user_settings')}}"><button type="button" class="admin-button">USER'S SETTINGS</button></a>
+            <a href = "{{url_for('sub_settings')}}"><button type="button" class="admin-button">SUBSCRIPTIONS' SETTINGS</button></a>
         </div>
     </div>
-</div>
-</body>
-</html>
+    {% endblock content %}

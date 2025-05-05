@@ -62,11 +62,15 @@ class User(BaseUser, db.Model):
     @staticmethod
     def verify_reset_token(token):
         s = Serializer(app.config['SECRET_KEY'])
-        try:
 
-            user_id = s.loads(token, 1800)['user_id']
-        except:
-            return None
+        user_id = s.loads(token, 30)['user_id']
+        print(user_id, "user_id")
+        user_type, _, user_id = user_id.partition(":")
+        if user_type == "user":
+            return User.query.get(int(user_id))
+        elif user_type == "admin":
+            return Admin.query.get(int(user_id))
+
         return User.query.get(user_id)
 
     def __repr__(self):
@@ -106,7 +110,7 @@ class Admin(BaseUser, db.Model):
             user_id = s.loads(token, 1800)['user_id']
         except:
             return None
-        return User.query.get(user_id)
+        return Admin.query.get(user_id)
 
     def __repr__(self):
         return f"Admin('{self.username}', '{self.email}', '{self.image_file}')"

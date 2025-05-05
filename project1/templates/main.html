@@ -23,11 +23,28 @@
 {% endblock links%}
 {% block content%}
 <div class="user-container">
+    {% if current_user.get_role() == 'admin'%}
         <div class="auth-logo">
-          <img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo">
+            <a href="{{url_for('upload')}}"><img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo"></a>
         </div>
+        {% else %}
+            {% if current_user.lasts == 0 %}
+                <div class="auth-logo">
+                    <img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo">
+                </div>
+
+                <a href = '{{url_for('subs_shop')}}'><div class = 'no-attemps'>Кончились поптыки, купи</div></a>
+            {% else %}
+                <div class="auth-logo">
+                    <a href="{{url_for('upload')}}"><img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo"></a>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if current_user.get_role() != 'admin' %}
         <div class="user-label">
-          ATTEMTIONS
+            ATTEMTIONS {{current_user.lasts}}/5
         </div>
+        {% else %}
+        {% endif %}
       </div>
 {%endblock content%}

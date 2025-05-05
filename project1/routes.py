@@ -20,13 +20,23 @@ from flask_mail import Message
 def home():
     return render_template("main.html", title="Домашняя страница")
 
+@app.route("/upload")
+@login_required
+def upload():
+    if current_user.get_role() == 'admin':
+        return redirect(url_for('home'))
+    user = User.query.get(current_user.id)
+    user.lasts = user.lasts - 1
+    db.session.commit()
+    return redirect(url_for('home'))
+
 
 @app.route('/settings', methods=["GET"])
 @login_required
 def settings():
     if current_user.get_role() != 'admin':
         abort(403)
-    return render_template('admin/settings.html', title='Настройки') 
+    return render_template('admin/admin_panel.html', title='Настройки') 
 
 
 @app.route('/settings/subs/sub_<int:sub_id>', methods=["GET", "POST"])
@@ -98,11 +108,11 @@ def user_pages(user_id):
         user.date_end = form.date_end.data
         user.is_blocked = form.is_blocked.data
         db.session.commit()
-        return redirect(url_for('user_pages', user_id = user_id))
+        return redirect(url_for('user_settings', user_id = user_id))
     if request.method == "GET":
         form.date_end.data = user.date_end
         form.is_blocked.data = user.is_blocked
-        form.lasts.data = 5
+        form.lasts.data = user.lasts
     return render_template('admin/user_profile.html',
                            title="Страница пользователя",
                            user=user,
@@ -179,7 +189,6 @@ def save_picture(form_picture):
 @app.route('/subs-shop', methods = ["GET", "POST"])
 @login_required
 def subs_shop():
-
     return render_template("user_subscription.html", title = "Подписка")
 @app.route('/account/edit', methods = ["GET", "POST"])
 @login_required
@@ -280,21 +289,31 @@ def reset_request():
 def sub():
     return render_template('sub.html')
     
-
+#TODO: Сделать лучше
 @app.route('/reset_password/<string:token>', methods=["GET", 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     user = User.verify_reset_token(token)
-    if user is None:
+    print(user)
+    admin = Admin.verify_reset_token(token)
+    print(admin)
+    if user is None and admin is None:
         flash("Неправильный или просроченный токен", 'warning')
         return redirect(url_for('reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(
-            form.password.data).decode("utf-8")
-        user.password = hashed_password
-        db.session.commit()
-        flash("Пароль был успешно обновлен")
-        return redirect(url_for('login'))
+        if user:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+            user.password = hashed_password
+            db.session.commit()
+            flash("Пароль был успешно обновлен")
+            return redirect(url_for('login'))
+        if admin:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+            user.password = hashed_password
+            db.session.commit()
+            flash("Пароль был успешно обновлен")
+            return redirect(url_for('login'))
+
     return render_template('reset_token.html', title='Reset Password', form=form)
