@@ -93,9 +93,8 @@ def user_pages(user_id):
     form = UpdateUserInfo()
     user = User.query.get_or_404(user_id)
     if form.validate_on_submit():
-        print(form.date_end.data, "HKAJGKJHGDJKHSGKDJHS")   
         user = User.query.get(int(user_id))
-        
+        user.lasts = form.lasts.data
         user.date_end = form.date_end.data
         user.is_blocked = form.is_blocked.data
         db.session.commit()
