@@ -167,28 +167,88 @@
     margin-bottom: 10px;
 }
 
+.plan-price > .price-text{
+    color: #232323;
+    font-size: 1.2rem;
+}
+
 .plan-period {
     font-size: 1rem;
     color: #232323;
 }
 
-.subscribe-button {
-    background-color: #a99ef4;
-    color: #232222;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.subscribe-button:hover {
-    background-color: #8a7de0;
-}
 
 .pricing-title{
     text-align: center;
     font-size: 1.5rem;
+}
+
+.account-button {
+    padding: 10px 20px;
+    background-color: rgb(73, 84, 96, 0.5); 
+    border-color: #f9f7f5;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;            
+    text-align: center;
+    margin: 0; 
+}
+
+.account-button.apply-button {
+    background-color: rgb(169, 158, 244, 0.5); 
+    float: right;
+}
+
+.account-button.discard-button {
+    background-color: rgb(73, 84, 96, 0.5);
+    float: left;
+}
+
+.account-button:hover {
+    transform: translateY(-2px);
+}
+
+.plan-container {
+    position: relative;
+    flex: 1;
+}
+
+.delete-button {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.pricing-plans {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+    margin-bottom: 60px; /* Добавляем место для кнопок удаления */
+}
+
+.edit-info {
+    clear: both;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+}
+
+[contenteditable="true"] {
+    border-bottom: 1px dashed #232222;
+    padding: 2px;
+    min-width: 50px;
+    display: inline-block;
+}
+
+[contenteditable="true"]:focus {
+    outline: none;
+    border-bottom: 1px solid #a99ef4;
 }
