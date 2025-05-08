@@ -88,7 +88,9 @@
     transform: translateY(-50%);
     z-index: 1;
 }
-
+.auth-logo:hover {
+      transform: translateY(-2px); /* Эффект "поднятия" */
+}
 .user-logo img {
     width: 20px;
     height: 20px;

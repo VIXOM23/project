@@ -100,18 +100,10 @@ class UpdateAccountForm(FlaskForm):
                          render_kw={'class': 'account-button'})
     
     def validate_password(self, password):
-<<<<<<< HEAD
-        pass
-=======
-        user = User.query.get(current_user.id)
-        admin = User.query.get(current_user.id)
-        if user:
-            if not user.check_password(self.password.data):
-                raise ValidationError("Неверный пароль")
-        if admin:
-            if not admin.check_password(self.password.data):
-                raise ValidationError("Неверный пароль")
->>>>>>> 5afb5efed6fe603bd84e0ad8988d1ba23de83123
+        if not current_user.check_password(self.password.data): 
+            raise ValidationError("Неверный пароль")
+
+
     def validate_username(self, username):
         
         if username.data != current_user.username:

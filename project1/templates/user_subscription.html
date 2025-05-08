@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./../static/user_subscription.css">
-</head>
+{% extends "layout.html"%}
+{% block styles%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'user_subscription.css')}}">
+    {% endblock styles%}
 
-<body>
-<div class="subscription-page">
-
-    <div class="shapka-container">
+        {% block links%}
         <div class="shapka-field">
             <div class="back-logo">
-                <img src="./../static/images/back.svg" alt="Back">
+                <img src="{{url_for('static', filename = 'images/back.svg')}}" alt="Back">
             </div>
-            <button type="button" class="auth-button">BACK</button>
+            <a href = "{{url_for('account')}}"><button type="button" class="auth-button">BACK</button></a>
         </div>
-        <button type="button" class="auth-button">LOG OUT</button>
-    </div>
+        <a href ="{{url_for('logout')}}"><button type="button" class="auth-button"> LOG OUT</button></a>
+        {% endblock links%}
 
+    {% block content %}
     <div class="subscription-container">
         <div class="subscription-header">SUBSCRIPTION</div>
         
@@ -55,7 +50,4 @@
             </div>
         </div>
     </div>
-
-</div>
-</body>
-</html>
+    {% endblock content%}
