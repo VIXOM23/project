@@ -63,8 +63,11 @@ def sub_page(sub_id):
 def sub_settings(): 
     if current_user.get_role() != 'admin':
         abort(403)
-    subs = Sub.query.all()
-    return render_template('admin/sub_settings.html', title="Настройки подписки ", subs=subs)
+    sub1, sub2, sub3  = Sub.query.all()
+    
+    if request.method == "POST":
+        print('args:', request.args)
+    return render_template('admin/subscription_settings.html', title="Настройки подписки ", sub1 = sub1, sub2= sub2, sub3 = sub3)
 
 #TODO: Добавить в модель USER поле активные попытки
 @app.route('/user_settings', methods=["GET", "POST"])
