@@ -7,9 +7,9 @@
             <div class="back-logo">
                 <img src="./../static/images/back.svg" alt="Back">
             </div>
-            <a href = "{{url_for('account')}}" <button type="button" class="auth-button">BACK</button></a>
+            <a href = "{{url_for('common.account')}}" <button type="button" class="auth-button">BACK</button></a>
         </div>
-      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
+      <a href = "{{url_for('common.logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
 
 
 
@@ -54,7 +54,7 @@
                 
                 </div>
                 <div class="edit-info">
-                    <a href = '{{url_for("edit_account_info")}}'><button type="button" class="account-button">Discard changes</button></a>
+                    <a href = '{{url_for("common.edit_account_info")}}'><button type="button" class="account-button">Discard changes</button></a>
                     {{form.submit}}
                 </div>
             </div>

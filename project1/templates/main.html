@@ -12,12 +12,12 @@
             <img src="{{url_for('static', filename='images/user_black.svg')}}" alt="User">
         </div>
         
-        <a href = "{{url_for('account')}}"><button type="button" class="auth-button">PERSONAL ACCOUNT</button></a>
+        <a href = "{{url_for('common.account')}}"><button type="button" class="auth-button">PERSONAL ACCOUNT</button></a>
       </div>
 
-      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
+      <a href = "{{url_for('common.logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
       {% if current_user.get_role() == 'admin'%}
-      <a href = "{{url_for('settings')}}"><button type="button" class="auth-button">SETTINGS</button></a>
+      <a href = "{{url_for('admin.settings')}}"><button type="button" class="auth-button">SETTINGS</button></a>
     {% else %}
     {% endif%}
 {% endblock links%}
@@ -25,7 +25,7 @@
 <div class="user-container">
     {% if current_user.get_role() == 'admin'%}
         <div class="auth-logo">
-            <a href="{{url_for('upload')}}"><img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo"></a>
+            <a href="{{url_for('common.upload')}}"><img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo"></a>
         </div>
         {% else %}
             {% if current_user.lasts == 0 %}
@@ -33,10 +33,10 @@
                     <img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo">
                 </div>
 
-                <a href = '{{url_for('subs_shop')}}'><div class = 'no-attemps'>Кончились поптыки, купи</div></a>
+                <a href = '{{url_for('sub.subs_shop')}}'><div class = 'no-attemps'>Кончились поптыки, купи</div></a>
             {% else %}
                 <div class="auth-logo">
-                    <a href="{{url_for('upload')}}"><img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo"></a>
+                    <a href="{{url_for('common.upload')}}"><img src="{{url_for('static', filename = 'images/logo.svg')}}" alt="Logo"></a>
                 </div>
             {% endif %}
         {% endif %}

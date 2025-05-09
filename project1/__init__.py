@@ -1,11 +1,9 @@
-
-
-
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_login.utils import login_url
 from flask_mail import Mail
 
 app = Flask(__name__)
@@ -14,13 +12,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'common.login'
 login_manager.login_message_category = 'info'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] =  os.environ["EMAIL"]
-
-app.config['MAIL_PASSWORD'] =  os.environ["EMAIL_PASSWORD"]
+app.config['MAIL_USERNAME'] = os.environ["EMAIL"]
+app.config['MAIL_PASSWORD'] = os.environ["EMAIL_PASSWORD"]
 mail = Mail(app)
-from project1 import routes
+
+from .routes.sub import sub_bp
+from .routes.help import help_bp
+from .routes.admin import admin_bp
+from .routes.common import common_bp
+app.register_blueprint(sub_bp, url_prefix='/sub')
+app.register_blueprint(help_bp, url_prefix='/help')
+app.register_blueprint(admin_bp, url_prefix='/admin')
+app.register_blueprint(common_bp, url_prefix="")

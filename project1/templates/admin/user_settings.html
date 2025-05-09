@@ -31,7 +31,7 @@
     </form>
     {%if users%}
     {% for user in users%}
-    <a href="{{url_for('user_pages', user_id = user.id)}}">Пользователь {{user.username}}, статус {{user.is_active()}}, почта {{user.email}}</a><br>
+    <a href="{{url_for('admin.user_pages', user_id = user.id)}}">Пользователь {{user.username}}, статус {{user.is_active()}}, почта {{user.email}}</a><br>
     {% endfor%}
     {%else%}
     {%endif%}

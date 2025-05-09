@@ -8,9 +8,9 @@
             <div class="back-logo">
                 <img src="./../../static/images/back.svg" alt="Back">
             </div>
-            <a href ="{{url_for('settings')}}"<button type="button" class="auth-button">BACK</button></a>
+            <a href ="{{url_for('admin.settings')}}"<button type="button" class="auth-button">BACK</button></a>
         </div>
-        <a href = "{{url_for('logout')}}"><button type="button" class="auth-button">LOG OUT</button></a>
+        <a href = "{{url_for('common.logout')}}"><button type="button" class="auth-button1">LOG OUT</button></a>
     {% endblock links%}
     {% block content %}
 

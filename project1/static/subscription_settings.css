@@ -77,6 +77,18 @@
     height: 20px;
 }
 
+.auth-button1 {
+    padding: 15px 15px 15px 15px; 
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+}
 .auth-button {
     padding: 15px 15px 15px 50px; 
     color: var(--button-text);

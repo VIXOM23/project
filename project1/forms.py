@@ -93,15 +93,16 @@ class UpdateAccountForm(FlaskForm):
     password = StringField("PASSWORD", validators=[],
                            render_kw={"placeholder": "YOUR PASSWORD", "class": "account-input",
                                       "type" : "password"})
-    confirm_password = StringField("CONFIRM PASsWORD", validators=[DataRequired()],
+    confirm_password = StringField("CONFIRM PASsWORD", validators=[],
                                   render_kw={"placeholder": "NEW PASSWORD", "class": "account-input", 
                                              "type" : "password"})
     submit = SubmitField("Apply Chandes",
                          render_kw={'class': 'account-button'})
     
     def validate_password(self, password):
-        if not current_user.check_password(self.password.data): 
-            raise ValidationError("Неверный пароль")
+        if self.password.data != "":
+            if not current_user.check_password(self.password.data): 
+                raise ValidationError("Неверный пароль")
 
 
     def validate_username(self, username):

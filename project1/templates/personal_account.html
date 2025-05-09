@@ -5,12 +5,12 @@
             <img src="{{url_for('static', filename='images/user_black.svg')}}" alt="User">
         </div>
         
-        <a href = "{{url_for('home')}}"><button type="button" class="auth-button">HOME</button></a>
+        <a href = "{{url_for('common.home')}}"><button type="button" class="auth-button">HOME</button></a>
       </div>
 
-      <a href = "{{url_for('logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
+      <a href = "{{url_for('common.logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
       {% if current_user.get_role() == 'admin'%}
-      <a href = "{{url_for('settings')}}"><button type="button" class="auth-button">SETTINGS</button></a>
+      <a href = "{{url_for('admin.settings')}}"><button type="button" class="auth-button">SETTINGS</button></a>
     {% else %}
     {% endif%}
     {% endblock links %}
@@ -37,7 +37,7 @@
                     <div class="account-label">{{current_user.username}}</div>
                     <div class="account-label">{{current_user.email}}</div>
                     
-                    <a href = "{{url_for('edit_account_info')}}"><div class="edit-info">
+                    <a href = "{{url_for('common.edit_account_info')}}"><div class="edit-info">
                         <button type="button" class="account-button">
                             <div class="edit-logo">
                                 <img src="{{url_for('static', filename='images/edit-line.svg')}}" alt="Edit">
@@ -51,7 +51,7 @@
         </div>
 
         <div class="subscription-container">
-            <a href = "{{url_for('subs_shop')}}"><button type="button" class="subscription-button">
+            <a href = "{{url_for('sub.subs_shop')}}"><button type="button" class="subscription-button">
                 <div class="subscription-img">
                     <img src="./../static/images/subscription.svg" alt="Subscription">
                 </div>
