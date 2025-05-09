@@ -64,7 +64,6 @@ class User(BaseUser, db.Model):
         s = Serializer(app.config['SECRET_KEY'])
 
         user_id = s.loads(token, 30)['user_id']
-        print(user_id, "user_id")
         user_type, _, user_id = user_id.partition(":")
         if user_type == "user":
             return User.query.get(int(user_id))

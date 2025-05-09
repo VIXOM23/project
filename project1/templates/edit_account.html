@@ -30,6 +30,10 @@
                         <span class="upload-text">Click to change photo</span>
                     </label>
                     <input type="file" id="profile-photo-input" name="profile_photo" accept="image/*" style="display: none;">
+                    {%if error_text %}
+                    <small> {{error_text}} </small>
+                    {% else %}
+                    {% endif %}
                  </div>
                 </div>
                 
