@@ -10,12 +10,10 @@ from project1.models import Admin, User
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators=[
-                           DataRequired(), Length(min=2, max=20)])
+    username = StringField("Username", validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
-    confirmpassword = PasswordField("Confirm Password", validators=[
-                                    DataRequired(), EqualTo("password")])
+    confirmpassword = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField("Sign Up")
 
     def validate_username(self, username):

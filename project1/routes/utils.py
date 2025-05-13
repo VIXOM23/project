@@ -39,7 +39,7 @@ def validate_image_file(image_filename):
         return False
     return True
 
-
+# Декоратор для роутов, которые требуют админа
 def admin_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
