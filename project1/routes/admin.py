@@ -4,13 +4,14 @@ from project1 import db
 from project1.models import Sub, User
 from flask_login import current_user, login_required
 
+from project1.routes.utils import admin_required
+
 admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/settings', methods=["GET"])
 @login_required
+@admin_required
 def settings():
-    if current_user.get_role() != 'admin':
-        abort(403)
     return render_template('admin/admin_panel.html', title='Настройки') 
 
 
@@ -28,7 +29,6 @@ def sub_settings():
         print('args:', request.args)
     return render_template('admin/subscription_settings.html', title="Настройки подписки ", sub1 = sub1, sub2= sub2, sub3 = sub3)
 
-#TODO: Добавить в модель USER поле активные попытки
 @admin_bp.route('/user_settings', methods=["GET", "POST"])
 @login_required
 def user_settings():

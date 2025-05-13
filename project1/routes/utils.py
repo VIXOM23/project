@@ -1,6 +1,9 @@
+from functools import wraps
 import os
+from flask import abort
 import secrets
 from PIL import Image
+from flask_login import current_user
 from .. import app, mail
 from flask_mail import Message
 from flask import url_for
@@ -35,3 +38,12 @@ def validate_image_file(image_filename):
     if ext not in ("jpg, png"):
         return False
     return True
+
+
+def admin_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if current_user.get_role() != "admin":
+            abort(403)
+        return func(*args, **kwargs)
+    return decorated_view
