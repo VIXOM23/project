@@ -110,6 +110,8 @@ def login():
 def upload():
     if current_user.get_role() == 'admin':
         return redirect(url_for('common.home'))
+    if current_user.lasts <= 0:
+        return redirect("sub.shop")
     user = User.query.get(current_user.id)
     user.lasts = user.lasts - 1
     db.session.commit()

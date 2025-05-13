@@ -27,7 +27,11 @@ def sub_settings():
     
     if request.method == "POST":
         print('args:', request.args)
-    return render_template('admin/subscription_settings.html', title="Настройки подписки ", sub1 = sub1, sub2= sub2, sub3 = sub3)
+    return render_template('admin/subscription_settings.html',
+                           title="Настройки подписки ",
+                           sub1 = sub1,
+                           sub2= sub2,
+                           sub3 = sub3)
 
 @admin_bp.route('/user_settings', methods=["GET", "POST"])
 @login_required
@@ -66,9 +70,9 @@ def user_pages(user_id):
     user = User.query.get_or_404(user_id)
     if form.validate_on_submit():
         user = User.query.get(int(user_id))
-        user.lasts = form.lasts.data
-        user.date_end = form.date_end.data
-        user.is_blocked = form.is_blocked.data
+        user.lasts = form.lasts.data # pyright: ignore
+        user.date_end = form.date_end.data # pyright: ignore
+        user.is_blocked = form.is_blocked.data # pyright: ignore
         db.session.commit()
         return redirect(url_for('admin.user_settings', user_id = user_id))
     if request.method == "GET":
