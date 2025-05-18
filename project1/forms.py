@@ -145,25 +145,40 @@ class ResetPasswordForm(FlaskForm):
 
 
 class UpdateSubForm(FlaskForm):
-    title = StringField("Название подписки", validators=[DataRequired()])
-    duration_days = IntegerField("Дни")
-    duration_month = IntegerField("Месяцы")
-    duration_year = IntegerField("Годы")
-    cost = IntegerField("Стоимость")
+    title = StringField("Название подписки", validators=[Optional()])
+    duration_days = IntegerField("Дни", render_kw={'class': 'plan-input plan-number'}, validators=[Optional()])
+    duration_month = IntegerField("Месяцы", render_kw={'class': 'plan-input plan-number'}, validators=[Optional()])
+    duration_year = IntegerField("Годы", render_kw={'class': 'plan-input plan-number'}, validators=[Optional()])
+    cost1 = IntegerField("Стоимость", render_kw={'class': 'plan-input price-number'}, validators=[Optional()])
+    cost2 = IntegerField("Стоимость", render_kw={'class': 'plan-input price-number'}, validators=[Optional()])
+    cost3 = IntegerField("Стоимость", render_kw={'class': 'plan-input price-number'}, validators=[Optional()])
 
-    submit = SubmitField("Сохранить изменения")
+    submit = SubmitField("Apply changes", render_kw={'class': 'account-button apply-button'})
 
 
     def validate_days(self, duration_days):
-        if duration_days.data >= 31 and duration_days.data < 0:
+        if self.duration_days.data >= 31 or self.duration_days.data < 0:
             raise ValidationError("Неверное количество дней")
 
     
     def validate_month(self, duration_month):
-        if duration_month.data >= 12 and duration_month.data < 0:
+        if self.duration_month.data >= 12 or self.duration_month.data < 0:
             raise ValidationError("Неверное количество месяцев") 
 
 
     def validate_year(self, duration_year):
-        if duration_year.data < 0:
+        if self.duration_year.data < 0:
             raise ValidationError("Количество лет не может быть отрицательным")
+
+    def validate_cost(self, cost1):
+        if self.cost1.data < 0:
+            raise ValidationError("Стоимость не может быть отрицательной")
+        
+    def validate_cost(self, cost2):
+        if self.cost2.data < 0:
+            raise ValidationError("Стоимость не может быть отрицательной")
+
+    def validate_cost(self, cost3):
+        if self.cost3.data < 0:
+            raise ValidationError("Стоимость не может быть отрицательной")          
+    

@@ -15,82 +15,95 @@
     {% block content %}
 
     <div class="subscription-container">
+        <form method="POST"> 
+                {{form.hidden_tag()}}
         <div class="subscription-header">SUBSCRIPTIONS' SETTINGS</div>
         
         <div class="pricing-title">PRICING PLANS</div>
         
         <div class="pricing-plans">
+            
             <div class="plan-container">
                 <div class="plan">
                     <div class="plan-title">
                         <span class="plan-number">
-                            <input type="text" class="plan-input plan-number" value="1" name="plan1_number">
+                            {{form.duration_days}}
+                            {% for error in form.duration_days.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
                         </span>
-                        <span class="plan-text">
-                            <input type="text" class="plan-input plan-text" value="WEEK" name="plan1_text">
+                        <span class="plan-text plan-input plan-text">
+                           {{sub1.title}}
                         </span>
                     </div>
                     <div class="plan-price">
                         <span class="price-number">
-                            <input type="text" class="plan-input price-number" value="99" name="plan1_price">
+                            {{form.cost1}}
+                            {% for error in form.cost1.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
                         </span>
                         <span class="price-text">RUB</span>
                     </div>
                 </div>
-                <button type="button" class="delete-button">
-                    <img src="./../../static/images/delete.svg" alt="Delete">
-                </button>
             </div>
             
             <div class="plan-container">
                 <div class="plan">
                     <div class="plan-title">
                         <span class="plan-number">
-                            <input type="text" class="plan-input plan-number" value="1" name="plan2_number">
+                            {{form.duration_month}}
+                            {% for error in form.duration_month.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
                         </span>
                         <span class="plan-text">
-                            <input type="text" class="plan-input plan-text" value="MONTH" name="plan2_text">
+                            {{sub2.title}}
                         </span>
                     </div>
                     <div class="plan-price">
                         <span class="price-number">
-                            <input type="text" class="plan-input price-number" value="199" name="plan2_price">
+                            {{form.cost2}}
+                            {% for error in form.cost2.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
                         </span>
                         <span class="price-text">RUB</span>
                     </div>
                 </div>
-                <button type="button" class="delete-button">
-                    <img src="./../../static/images/delete.svg" alt="Delete">
-                </button>
             </div>
             
             <div class="plan-container">
                 <div class="plan">
                     <div class="plan-title">
                         <span class="plan-number">
-                            <input type="text" class="plan-input plan-number" value="1" name="plan3_number">
+                            {{form.duration_year}}
+                            {% for error in form.duration_year.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
                         </span>
                         <span class="plan-text">
-                            <input type="text" class="plan-input plan-text" value="YEAR" name="plan3_text">
+                            {{sub3.title}}
                         </span>
                     </div>
                     <div class="plan-price">
                         <span class="price-number">
-                            <input type="text" class="plan-input price-number" value="999" name="plan3_price">
+                            {{form.cost3}}
+                            {% for error in form.cost3.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
                         </span>
                         <span class="price-text">RUB</span>
                     </div>
                 </div>
-                <button type="button" class="delete-button">
-                    <img src="./../../static/images/delete.svg" alt="Delete">
-                </button>
             </div>
         </div>
             
             <div class="edit-info">
-                <button type="button" class="account-button discard-button">Discard changes</button>
-                <button type="submit" class="account-button apply-button">Apply changes</button>
+                <a href=" {{url_for('admin.sub_settings')}}"><button type="button" class="account-button discard-button">Discard changes</button></a>
+                {{form.submit}}
             </div>
+        </form>
     </div>
     {% endblock content %}
     

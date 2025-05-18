@@ -1,5 +1,5 @@
 from flask import redirect, render_template, url_for, request, Blueprint, abort
-from project1.forms import UpdateUserInfo, UserFilterForm
+from project1.forms import UpdateUserInfo, UserFilterForm, UpdateSubForm
 from project1 import db
 from project1.models import Sub, User
 from flask_login import current_user, login_required
@@ -19,19 +19,35 @@ def settings():
 
 
 @admin_bp.route('/settings/subs', methods=["GET", "POST"])
+@admin_required
 @login_required
 def sub_settings(): 
-    if current_user.get_role() != 'admin':
-        abort(403)
+    form = UpdateSubForm()
     sub1, sub2, sub3  = Sub.query.all()
     
-    if request.method == "POST":
-        print('args:', request.args)
+    if form.validate_on_submit():
+        sub1.cost = form.cost1.data
+        sub2.cost = form.cost2.data
+        sub3.cost = form.cost3.data
+        sub1.duration_days = form.duration_days.data
+        sub2.duration_months = form.duration_month.data
+        sub3.duration_years = form.duration_year.data
+        db.session.commit()
+    
+    if request.method == "GET":
+        form.cost1.data = sub1.cost
+        form.cost2.data = sub2.cost
+        form.cost3.data = sub3.cost 
+        form.duration_days.data = sub1.duration_days 
+        form.duration_month.data = sub2.duration_months
+        form.duration_year.data = sub3.duration_years
     return render_template('admin/subscription_settings.html',
+                           form = form,
                            title="Настройки подписки ",
                            sub1 = sub1,
                            sub2= sub2,
                            sub3 = sub3)
+
 
 @admin_bp.route('/user_settings', methods=["GET", "POST"])
 @login_required

@@ -22,24 +22,24 @@ with app.app_context():
     db.session.add(admin)
     db.session.commit()
 
-    sub1 = Sub(title = '1',
-               duration_days = 1, 
+    sub1 = Sub(title = 'DAYS',
+               duration_days = 7, 
                duration_months = 0, 
-               duration_years= 2,
-               cost = 10)
+               duration_years= 0,
+               cost = 99)
 
 
-    sub2 = Sub(title ='2',
-               duration_days = 2, 
-               duration_months = 2, 
-               duration_years= 2,
-               cost = 10)
-   
-    sub3 = Sub(title = '3',
-               duration_days = 1, 
+    sub2 = Sub(title ='MONTH',
+               duration_days = 0, 
                duration_months = 1, 
+               duration_years= 0,
+               cost = 199)
+   
+    sub3 = Sub(title = 'YEARS',
+               duration_days = 0, 
+               duration_months = 0, 
                duration_years = 1,
-               cost = 10)
+               cost = 999)
     db.session.add(sub1)
     db.session.commit()
     db.session.add(sub2)
