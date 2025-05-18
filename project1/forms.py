@@ -170,15 +170,15 @@ class UpdateSubForm(FlaskForm):
         if self.duration_year.data < 0:
             raise ValidationError("Количество лет не может быть отрицательным")
 
-    def validate_cost(self, cost1):
+    def validate_cost1(self, cost1):
         if self.cost1.data < 0:
             raise ValidationError("Стоимость не может быть отрицательной")
         
-    def validate_cost(self, cost2):
+    def validate_cost2(self, cost2):
         if self.cost2.data < 0:
             raise ValidationError("Стоимость не может быть отрицательной")
 
-    def validate_cost(self, cost3):
+    def validate_cost3(self, cost3):
         if self.cost3.data < 0:
             raise ValidationError("Стоимость не может быть отрицательной")          
     

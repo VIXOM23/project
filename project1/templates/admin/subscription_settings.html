@@ -28,9 +28,6 @@
                     <div class="plan-title">
                         <span class="plan-number">
                             {{form.duration_days}}
-                            {% for error in form.duration_days.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
                         </span>
                         <span class="plan-text plan-input plan-text">
                            {{sub1.title}}
@@ -39,23 +36,25 @@
                     <div class="plan-price">
                         <span class="price-number">
                             {{form.cost1}}
-                            {% for error in form.cost1.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
+                            
                         </span>
                         <span class="price-text">RUB</span>
                     </div>
                 </div>
+                {% for error in form.cost1.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
+                {% for error in form.duration_days.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
             </div>
+             
             
             <div class="plan-container">
                 <div class="plan">
                     <div class="plan-title">
                         <span class="plan-number">
                             {{form.duration_month}}
-                            {% for error in form.duration_month.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
                         </span>
                         <span class="plan-text">
                             {{sub2.title}}
@@ -64,23 +63,25 @@
                     <div class="plan-price">
                         <span class="price-number">
                             {{form.cost2}}
-                            {% for error in form.cost2.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
+                           
                         </span>
                         <span class="price-text">RUB</span>
                     </div>
                 </div>
+                 {% for error in form.cost2.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
+                {% for error in form.duration_month.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
             </div>
+            
             
             <div class="plan-container">
                 <div class="plan">
                     <div class="plan-title">
                         <span class="plan-number">
                             {{form.duration_year}}
-                            {% for error in form.duration_year.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
                         </span>
                         <span class="plan-text">
                             {{sub3.title}}
@@ -89,14 +90,19 @@
                     <div class="plan-price">
                         <span class="price-number">
                             {{form.cost3}}
-                            {% for error in form.cost3.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
+                           
                         </span>
                         <span class="price-text">RUB</span>
                     </div>
                 </div>
+                 {% for error in form.cost3.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
+                {% for error in form.duration_year.errors%}
+                        <small> {{error}} </small>
+                    {% endfor%}
             </div>
+             
         </div>
             
             <div class="edit-info">
