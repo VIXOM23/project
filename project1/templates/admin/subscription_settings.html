@@ -1,115 +1,115 @@
-{%extends "layout.html"%}    
-{% block styles%}
+{% extends "layout.html" %}
+
+{% block styles %}
     <link rel="stylesheet" href="./../../static/subscription_settings.css">
-    {% endblock styles%}
+{% endblock styles %}
 
-        {% block links%}
-        <div class="shapka-field">
-            <div class="back-logo">
-                <img src="./../../static/images/back.svg" alt="Back">
-            </div>
-            <a href ="{{url_for('admin.settings')}}"<button type="button" class="auth-button">BACK</button></a>
+{% block links %}
+    <div class="shapka-field">
+        <div class="back-logo">
+            <img src="./../../static/images/back.svg" alt="Back">
         </div>
-        <a href = "{{url_for('common.logout')}}"><button type="button" class="auth-button1">LOG OUT</button></a>
-    {% endblock links%}
-    {% block content %}
+        <a href="{{url_for('admin.settings')}}"><button type="button" class="auth-button">BACK</button></a>
+    </div>
+    <a href="{{url_for('common.logout')}}"><button type="button" class="auth-button1">LOG OUT</button></a>
+{% endblock links %}
 
+{% block content %}
     <div class="subscription-container">
-        <form method="POST"> 
-                {{form.hidden_tag()}}
-        <div class="subscription-header">SUBSCRIPTIONS' SETTINGS</div>
-        
-        <div class="pricing-title">PRICING PLANS</div>
-        
-        <div class="pricing-plans">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="subscription-header">SUBSCRIPTIONS' SETTINGS</div>
             
-            <div class="plan-container">
-                <div class="plan">
-                    <div class="plan-title">
-                        <span class="plan-number">
-                            {{form.duration_days}}
-                        </span>
-                        <span class="plan-text plan-input plan-text">
-                           {{sub1.title}}
-                        </span>
+            <div class="pricing-title">PRICING PLANS</div>
+            
+            <div class="pricing-plans">
+
+                <div class="plan-container">
+                    <div class="plan">
+                        <div class="plan-title">
+                            <div class="plan-duration">
+                                <span class="plan-number">
+                                    {{ form.duration_days }}
+                                </span>
+                            </div>
+                            <div class="plan-text">
+                                {{ sub1.title }}
+                            </div>
+                        </div>
+                        <div class="plan-price">
+                            <span class="price-number">
+                                {{ form.cost1 }}
+                            </span>
+                            <span class="price-text">RUB</span>
+                        </div>
                     </div>
-                    <div class="plan-price">
-                        <span class="price-number">
-                            {{form.cost1}}
-                            
-                        </span>
-                        <span class="price-text">RUB</span>
-                    </div>
+                    {% for error in form.cost1.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                    {% for error in form.duration_days.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
                 </div>
-                {% for error in form.cost1.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
-                {% for error in form.duration_days.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
-            </div>
-             
-            
-            <div class="plan-container">
-                <div class="plan">
-                    <div class="plan-title">
-                        <span class="plan-number">
-                            {{form.duration_month}}
-                        </span>
-                        <span class="plan-text">
-                            {{sub2.title}}
-                        </span>
+                
+                <div class="plan-container">
+                    <div class="plan">
+                        <div class="plan-title">
+                            <div class="plan-duration">
+                                <span class="plan-number">
+                                    {{ form.duration_month }}
+                                </span>
+                            </div>
+                            <div class="plan-text">
+                                {{ sub2.title }}
+                            </div>
+                        </div>
+                        <div class="plan-price">
+                            <span class="price-number">
+                                {{ form.cost2 }}
+                            </span>
+                            <span class="price-text">RUB</span>
+                        </div>
                     </div>
-                    <div class="plan-price">
-                        <span class="price-number">
-                            {{form.cost2}}
-                           
-                        </span>
-                        <span class="price-text">RUB</span>
-                    </div>
+                    {% for error in form.cost2.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                    {% for error in form.duration_month.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
                 </div>
-                 {% for error in form.cost2.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
-                {% for error in form.duration_month.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
-            </div>
-            
-            
-            <div class="plan-container">
-                <div class="plan">
-                    <div class="plan-title">
-                        <span class="plan-number">
-                            {{form.duration_year}}
-                        </span>
-                        <span class="plan-text">
-                            {{sub3.title}}
-                        </span>
+                
+                <div class="plan-container">
+                    <div class="plan">
+                        <div class="plan-title">
+                            <div class="plan-duration">
+                                <span class="plan-number">
+                                    {{ form.duration_year }}
+                                </span>
+                            </div>
+                            <div class="plan-text">
+                                {{ sub3.title }}
+                            </div>
+                        </div>
+                        <div class="plan-price">
+                            <span class="price-number">
+                                {{ form.cost3 }}
+                            </span>
+                            <span class="price-text">RUB</span>
+                        </div>
                     </div>
-                    <div class="plan-price">
-                        <span class="price-number">
-                            {{form.cost3}}
-                           
-                        </span>
-                        <span class="price-text">RUB</span>
-                    </div>
+                    {% for error in form.cost3.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                    {% for error in form.duration_year.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
                 </div>
-                 {% for error in form.cost3.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
-                {% for error in form.duration_year.errors%}
-                        <small> {{error}} </small>
-                    {% endfor%}
             </div>
-             
-        </div>
             
             <div class="edit-info">
-                <a href=" {{url_for('admin.sub_settings')}}"><button type="button" class="account-button discard-button">Discard changes</button></a>
-                {{form.submit}}
+                <a href="{{url_for('admin.sub_settings')}}"><button type="button" class="account-button discard-button">Discard changes</button></a>
+                {{ form.submit }}
             </div>
         </form>
     </div>
-    {% endblock content %}
-    
+{% endblock content %}

@@ -12,7 +12,12 @@ sub_bp = Blueprint('sub', __name__)
 @sub_bp.route('/subs-shop', methods = ["GET", "POST"])
 @login_required
 def subs_shop():
-    return render_template("user_subscription.html", title = "Подписка")
+    sub1, sub2, sub3  = Sub.query.all()
+    return render_template("user_subscription.html", 
+                           title = "Подписка",
+                           sub1 = sub1,
+                           sub2 = sub2,
+                           sub3 = sub3)
 
 @sub_bp.route('/settings/subs/sub_<int:sub_id>', methods=["GET", "POST"])
 @login_required

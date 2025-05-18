@@ -16,7 +16,7 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: url('./../static/images/fon.svg') no-repeat center center fixed;
+    background: #232222;
     color: var(--text-color);
     background-size: cover;
     margin: 0;
@@ -260,5 +260,124 @@ small {
     font-size: 0.8rem;
     display: block;
     text-align: center;
+    margin-top: 5px;
+}
+
+.search-section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.search-type-label,
+.search-query-label {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #232323;
+}
+
+.radio-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 8px;
+}
+
+.radio-label {
+    font-size: 1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #a99ef4;
+}
+
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.user-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.user-card:hover {
+    transform: translateY(-3px);
+}
+
+.user-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.username {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.user-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.user-status.active {
+    background-color: rgba(169, 158, 244, 0.2);
+    color: #4a3f8f;
+}
+
+.user-status.inactive {
+    background-color: rgba(73, 84, 96, 0.2);
+    color: #495460;
+}
+
+.user-email {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 0.9rem;
     margin-top: 5px;
 }
