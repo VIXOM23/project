@@ -1,38 +1,69 @@
-{%extends "layout.html"%}
+{% extends "layout.html" %}
 
-{% block content%}
-<form method="POST">
-        {{ form.hidden_tag() }}
-        
-        <div class="form-group">
-            {{ form.search_type.label }}
-            <div class="radio-options">
-                {% for subfield in form.search_type %}
-                    <div class="radio-option">
-                        {{ subfield }}
-                        {{ subfield.label }}
+{% block styles %}
+    <link rel="stylesheet" href="./../../static/user_settings.css">
+{% endblock styles %}
+
+{% block links %}
+    <div class="shapka-field">
+        <div class="back-logo">
+            <img src="./../../static/images/back.svg" alt="Back">
+        </div>
+        <a href="{{url_for('admin.settings')}}"><button type="button" class="auth-button">BACK</button></a>
+    </div>
+    <a href="{{url_for('common.logout')}}"><button type="button" class="auth-button1">LOG OUT</button></a>
+{% endblock links %}
+
+{% block content %}
+    <div class="subscription-container">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="subscription-header">USER'S SETTINGS</div>
+            
+            <div class="search-section">
+                <div class="form-group">
+                    {{ form.search_type.label(class="search-type-label") }}
+                    <div class="radio-options">
+                        {% for subfield in form.search_type %}
+                            <label class="radio-option">
+                                {{ subfield }}
+                                <span class="radio-label">{{ subfield.label.text }}</span>
+                            </label>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                    {% if form.search_type.errors %}
+                        <div class="error">{{ form.search_type.errors[0] }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.search_query.label(class="search-query-label") }}
+                    {{ form.search_query(class="search-input") }}
+                    {% if form.search_query.errors %}
+                        <div class="error">{{ form.search_query.errors[0] }}</div>
+                    {% endif %}
+                </div>
+                
+                {{ form.submit(class="account-button apply-button") }}
             </div>
-            {% if form.search_type.errors %}
-                <div class="error m-3">{{ form.search_type.errors[0] }}</div>
-            {% endif %}
-        </div>
+        </form>
         
-        <div class="form-group">
-            {{ form.search_query.label }}
-            {{ form.search_query }}
-            {% if form.search_query.errors %}
-                <div class="error">{{ form.search_query.errors[0] }}</div>
-            {% endif %}
+        {% if users %}
+        <div class="users-list">
+            {% for user in users %}
+            <div class="user-card">
+                <a href="{{url_for('admin.user_pages', user_id=user.id)}}" class="user-link">
+                    <div class="user-info">
+                        <span class="username">User {{ user.username }}</span>
+                        <span class="user-status {{ 'active' if user.is_active() else 'inactive' }}">
+                            Status: {{ 'ACTIVE' if user.is_active() else 'INACTIVE' }}
+                        </span>
+                        <span class="user-email">Email: {{ user.email }}</span>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
         </div>
-        
-        {{ form.submit }}
-    </form>
-    {%if users%}
-    {% for user in users%}
-    <a href="{{url_for('admin.user_pages', user_id = user.id)}}">Пользователь {{user.username}}, статус {{user.is_active()}}, почта {{user.email}}</a><br>
-    {% endfor%}
-    {%else%}
-    {%endif%}
-{%endblock content%}    
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -18,7 +18,7 @@
         <div class="subscription-header">SUBSCRIPTION</div>
         
         <div class="status-section">
-            STATUS
+            STATUS: {%if current_user.is_active()%} ACTIVE {%else%} INACTIVE {%endif%}
         </div>
         
         <div class="info-section">
@@ -29,22 +29,22 @@
         
         <div class="pricing-plans">
             <div class="plan">
-                <div class="plan-title">1 WEEK</div>
-                <div class="plan-price"> 99</div>
+                <div class="plan-title">{{sub1.duration_days}} DAYS</div>
+                <div class="plan-price"> {{sub1.cost}}</div>
                 <div class="plan-period">RUB</div>
                 <button class="subscribe-button">Subscribe</button>
             </div>
             
             <div class="plan">
-                <div class="plan-title">1 MONTH</div>
-                <div class="plan-price">199</div>
+                <div class="plan-title">{{sub2.duration_months}} MONTH</div>
+                <div class="plan-price">{{sub2.cost}}</div>
                 <div class="plan-period">RUB</div>
                 <button class="subscribe-button">Subscribe</button>
             </div>
             
             <div class="plan">
-                <div class="plan-title">1 YEAR</div>
-                <div class="plan-price">999</div>
+                <div class="plan-title">{{sub3.duration_years}} YEAR</div>
+                <div class="plan-price">{{sub3.cost}}</div>
                 <div class="plan-period">RUB</div>
                 <button class="subscribe-button">Subscribe</button>
             </div>

@@ -16,10 +16,6 @@ class RegistrationForm(FlaskForm):
     confirmpassword = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField("Sign Up")
 
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationError("This username is taken. Выбери другое")
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
@@ -102,13 +98,6 @@ class UpdateAccountForm(FlaskForm):
             if not current_user.check_password(self.password.data): 
                 raise ValidationError("Неверный пароль")
 
-
-    def validate_username(self, username):
-        
-        if username.data != current_user.username:
-            user = User.query.filter_by(username=username.data).first()
-            if user:
-                raise ValidationError("This username is taken. Выбери другое")
 
     def validate_email(self, email):
         if email.data != current_user.email:
