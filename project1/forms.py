@@ -156,17 +156,17 @@ class UpdateSubForm(FlaskForm):
     submit = SubmitField("Apply changes", render_kw={'class': 'account-button apply-button'})
 
 
-    def validate_days(self, duration_days):
+    def validate_duration_days(self, duration_days):
         if self.duration_days.data >= 31 or self.duration_days.data < 0:
             raise ValidationError("Неверное количество дней")
 
     
-    def validate_month(self, duration_month):
+    def validate_duration_month(self, duration_month):
         if self.duration_month.data >= 12 or self.duration_month.data < 0:
             raise ValidationError("Неверное количество месяцев") 
 
 
-    def validate_year(self, duration_year):
+    def validate_duration_year(self, duration_year):
         if self.duration_year.data < 0:
             raise ValidationError("Количество лет не может быть отрицательным")
 
