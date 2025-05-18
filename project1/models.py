@@ -29,14 +29,17 @@ class User(BaseUser, db.Model):
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(100), nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    avatar_filename = db.Column(db.String(100))
+    avatar_mime_type = db.Column(db.String(50))
+    avatar_data = db.Column(db.Text)
     date_started = db.Column(db.DateTime)
     date_end = db.Column(db.DateTime)
+
     lasts = db.Column(db.Integer, default = 5)
     is_blocked = db.Column(db.Boolean(), nullable=False, default=False)
 
 
-    def is_active(self):
+    def is_active(self): #pyright: ignore
         return self.date_end != None
     
     def get_id(self):
@@ -73,7 +76,7 @@ class User(BaseUser, db.Model):
         return User.query.get(user_id)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.username}', '{self.email}')"
 
 class Admin(BaseUser, db.Model):
     __tablename__ = 'Admin'
