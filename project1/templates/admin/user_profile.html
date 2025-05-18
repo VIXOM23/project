@@ -1,30 +1,52 @@
 {% extends "layout.html"%}
+
+{% block styles %}
+    <link rel="stylesheet" href="./../../static/user_profile.css">
+{% endblock styles %}
+
+{% block links %}
+    <div class="shapka-field">
+        <div class="back-logo">
+            <img src="./../../static/images/back.svg" alt="Back">
+        </div>
+        <a href="{{url_for('admin.settings')}}"><button type="button" class="auth-button">BACK</button></a>
+    </div>
+    <a href="{{url_for('common.logout')}}"><button type="button" class="auth-button1">LOG OUT</button></a>
+{% endblock links %}
+
 {%block content%}
+<div class="user-container">
 <form method="POST">
         {{ form.hidden_tag() }}
+
+        <div class="user-info">тут инфа о пользователе</div>
         
-        <div class="form-group">
-            {{ form.date_end.label }}
-            {{form.date_end}}
-            {% if form.date_end.errors %}
-                <div class="error">{{ form.date_end.errors[0] }}</div>
-            {% endif %}
-        </div>
+            <div class="form-group">
+                {{ form.date_end.label(class="form-label") }}
+                {{ form.date_end(class="form-input date-input") }}
+                {% if form.date_end.errors %}
+                    <div class="error">{{ form.date_end.errors[0] }}</div>
+                {% endif %}
+            </div>
         
-        <div class="form-group">
-            {{form.is_blocked.label}}
-            {{form.is_blocked}}
-            {% if form.is_blocked.errors %}
-                <div class="error">{{ form.is_blocked.errors[0] }}</div>
-            {% endif %}
+         <div class="form-group checkbox-group">
+                <div class="checkbox-container">
+                    {{ form.is_blocked(class="checkbox-input") }}
+                    {{ form.is_blocked.label(class="checkbox-label") }}
+                </div>
+                {% if form.is_blocked.errors %}
+                    <div class="error">{{ form.is_blocked.errors[0] }}</div>
+                {% endif %}
+            </div>
 
         <div class="form-group">
-            {{form.lasts.label}}
-            {{form.lasts}}
-            {% if form.lasts.errors %}
-                <div class="error">{{ form.lasts.errors[0] }}</div>
-            {% endif %}
-        </div>
+                {{ form.lasts.label(class="form-label") }}
+                {{ form.lasts(class="form-input") }}
+                {% if form.lasts.errors %}
+                    <div class="error">{{ form.lasts.errors[0] }}</div>
+                {% endif %}
+            </div>
         {{ form.submit }}
     </form>
+</div>
 {%endblock content%}

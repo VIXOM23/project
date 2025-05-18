@@ -7,13 +7,12 @@
             <div class="back-logo">
                 <img src="./../static/images/back.svg" alt="Back">
             </div>
-            <a href = "{{url_for('common.account')}}" <button type="button" class="auth-button">BACK</button></a>
+            <a href = "{{url_for('common.account')}}" ></a><button type="button" class="auth-button">BACK</button></a>
         </div>
       <a href = "{{url_for('common.logout')}}"><button type="button" class="auth-button s1">LOG OUT</button></a>
 
-
-
 {% endblock links%}
+
 {%block content%}
 <form method="POST" enctype="multipart/form-data">
     {{form.hidden_tag()}}

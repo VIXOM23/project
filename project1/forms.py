@@ -20,19 +20,21 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:
-            raise ValidationError("This email is taken. Выбери другое")
+            raise ValidationError("This email is taken. Choose another one.")
 
 
 class UpdateUserInfo(FlaskForm):
-    date_end = DateField("Конец пользования подписки", validators=[Optional()])
-    is_blocked = BooleanField("Заблокировать")
-    lasts = IntegerField("Оставшиеся попытки")
-    submit = SubmitField("Подтвердить изменения")
+    date_end = DateField("End of subscription", validators=[Optional()])
+    is_blocked = BooleanField("Block")
+    lasts = IntegerField("Attemptions")
+
+    submit = SubmitField("Apply changes", render_kw={'class': 'account-button apply-button'})
+
 
 
     def validate_lasts(self, lasts):
         if lasts.data >= 10:
-            raise ValidationError("Количество разрешенных доступов слишком большое")
+            raise ValidationError("Too much attemptions")
 
 
 

@@ -1,0 +1,193 @@
+:root {
+    --primary-color: #232222;
+    --text-color: #f9f7f5;
+    --border-color: #232222;
+    --button-bg: #f9f7f5;
+    --button-text: #232222;
+    --shapka-bg: #f9f7f5;
+    --account-bg: #f9f7f5;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shapka-container {
+    background-color: var(--shapka-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.shapka-field {
+    display: flex;
+    align-items: center;
+}
+
+.shapka-field:hover .back-logo {
+    transform: translateY(-50%) scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+.back-logo {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    margin: auto;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.back-logo img {
+    width: 20px;
+    height: 20px;
+}
+
+.auth-button1 {
+    padding: 15px;
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+}
+
+.auth-button {
+    padding: 15px 15px 15px 50px;
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+}
+
+.shapka-container > .auth-button:last-child {
+    padding-left: 15px;
+    margin-left: 0;
+}
+
+.auth-button:hover {
+    transform: translateY(-2px);
+}
+
+
+.user-container {
+    background-color: #f9f7f5;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 60px auto 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.user-info {
+    background-color: #f9f7f5;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    color: #232222;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #232323;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #a99ef4;
+}
+
+.date-input {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-input {
+    width: 18px;
+    height: 18px;
+    accent-color: #a99ef4;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    font-size: 1rem;
+    color: #232323;
+    cursor: pointer;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding-left: 5px;
+}
+
+.account-button.apply-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    background-color: rgba(169, 158, 244, 0.5);
+    border-radius: 8px;
+    border-color: rgba(169, 158, 244, 0.5);
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;            
+    text-align: center;
+    margin: 0; 
+}
+
+.account-button:hover {
+    transform: translateY(-2px);
+}
