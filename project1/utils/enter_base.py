@@ -1,4 +1,5 @@
 from project1.models import Admin, User, Sub
+import os
 from project1 import app, db
 
 with app.app_context():
@@ -7,18 +8,29 @@ with app.app_context():
         user = User(username=f"User:{i}", 
                     email = f"{i}@mail.ru")
         user.set_password('password')
+        default_avatar_path = os.path.join(app.root_path, 'static', 'profile_pics', 'default.jpg')
+        with open(default_avatar_path, 'rb') as file:
+            user.set_image(file, "default", "image/jpg" )
         db.session.add(user)
         db.session.commit()
     for i in range(10):
         user = User(username=f"AnotherUser:{i}",
                     email = f"another{i}@mail.ru")
         user.set_password('password')
+        default_avatar_path = os.path.join(app.root_path, 'static', 'profile_pics', 'default.jpg')
+        with open(default_avatar_path, 'rb') as file:
+            user.set_image(file, "default", "image/jpg" )
         db.session.add(user)
         db.session.commit()
 
     admin=Admin(username = "Admin",
                 email="admin@mail.ru")
     admin.set_password('password')
+    
+    
+    default_avatar_path = os.path.join(app.root_path, 'static', 'profile_pics', 'default.jpg')
+    with open(default_avatar_path, 'rb') as file:
+        admin.set_image(file, "default", "image/jpg" )
     db.session.add(admin)
     db.session.commit()
 

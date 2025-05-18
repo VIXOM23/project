@@ -28,7 +28,7 @@
             <div class="account-content">
                 <div class="profile-section">
                     <div class="profile-photo">
-                        <img src="{{url_for('static', filename = 'profile_pics/'+current_user.image_file)}}" alt="Profile Photo">
+                        <img src="data:{{ current_user.avatar_mime_type }};base64,{{ current_user.avatar_data }}" alt="Profile Photo">
                         <span>Profile Photo</span>
                     </div>
                 </div>

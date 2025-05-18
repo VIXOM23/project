@@ -25,10 +25,11 @@
                <div class="profile-section">
                 <div class="profile-photo">
                     <label for="profile-photo-input" class="avatar-upload-label">
-                        <img id="avatar-preview" src="{{url_for('static', filename='profile_pics/' + current_user.image_file)}}" alt="Profile Photo">
+                        <img id="avatar-preview" src="data:{{ current_user.avatar_mime_type }};base64,{{ current_user.avatar_data }}" alt="Profile Photo">
                         <span class="upload-text">Click to change photo</span>
                     </label>
-                    <input type="file" id="profile-photo-input" name="profile_photo" accept="image/*" style="display: none;">
+                    <!-- <input type="file" id="profile-photo-input" name="profile_photo" accept="image/*" style="display: none;"> -->
+                    {{form.avatar}}
                     {%if error_text %}
                     <small> {{error_text}} </small>
                     {% else %}

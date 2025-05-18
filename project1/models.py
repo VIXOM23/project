@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import base64
 from enum import unique
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from sqlalchemy import Nullable
@@ -41,13 +42,27 @@ class User(BaseUser, db.Model):
 
     def is_active(self): #pyright: ignore
         return self.date_end != None
-    
+
+
+    def set_image(self, image_file, *args):
+        base64_data = base64.b64encode(image_file.read()).decode('utf-8')
+        if args:
+            self.avatar_filename = args[0]
+            self.avatar_mime_type = args[1]
+        else:
+            self.avatar_filename = image_file.filename
+            self.avatar_mime_type = image_file.mimetype
+
+        self.avatar_data = base64_data
+        
+
     def get_id(self):
         return f"user:{self.id}"
 
     
     def int_id(self):
         return self.id
+
 
 
     def set_password(self, password):
@@ -81,15 +96,28 @@ class User(BaseUser, db.Model):
 class Admin(BaseUser, db.Model):
     __tablename__ = 'Admin'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
+    username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(100), nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-
+    avatar_filename = db.Column(db.String(100))
+    avatar_mime_type = db.Column(db.String(50))
+    avatar_data = db.Column(db.Text)
 
     def get_id(self):
         return f"admin:{self.id}"
 
+
+    
+    def set_image(self, image_file, *args):
+        base64_data = base64.b64encode(image_file.read()).decode('utf-8')
+        if args:
+            self.avatar_filename = args[0]
+            self.avatar_mime_type = args[1]
+        else:
+            self.avatar_filename = image_file.filename
+            self.avatar_mime_type = image_file.mimetype
+
+        self.avatar_data = base64_data
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

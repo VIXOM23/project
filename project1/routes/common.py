@@ -20,9 +20,7 @@ def home():
 @common_bp.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
-    image_file = url_for(
-        'static', filename='profile_pics/' + current_user.image_file)
-    return render_template("personal_account.html", title='Account', image_file=image_file)
+    return render_template("personal_account.html", title='Account')
 
 
 @common_bp.route('/account/edit', methods = ["GET", "POST"])
@@ -35,15 +33,10 @@ def edit_account_info():
             user = User.query.get(current_user.id)
         elif current_user.get_role() == 'admin':
             user = Admin.query.get(current_user.id)
-        if 'profile_photo' in request.files:
-            if request.files['profile_photo'].filename != '':
-                if not validate_image_file(request.files['profile_photo'].filename):
-                    error_text = "Поддерживаемые форматы: jpg, png"
-                    return render_template('edit_account.html', title = 'Изменение данных аккаунта',
-                                           form = form,
-                                           error_text = error_text)
-                picture_file = save_picture(request.files['profile_photo'])
-                user.image_file = picture_file # pyright:ignore
+
+        file = form.avatar.data
+        if file:
+            user.set_image(file) #pyright: ignore
         user.username = form.username.data  # pyright: ignore
         user.email = form.email.data  # pyright: ignore
         if form.password.data != "":
