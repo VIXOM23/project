@@ -101,10 +101,10 @@ def login():
 @common_bp.route("/upload")
 @login_required
 def upload():
-    if current_user.get_role() == 'admin':
+    if current_user.get_role() == 'admin' or current_user.is_active():
         return redirect(url_for('common.home'))
     if current_user.lasts <= 0:
-        return redirect("sub.shop")
+        return redirect(url_for("subs.shop"))
     user = User.query.get(current_user.id)
     user.lasts = user.lasts - 1
     db.session.commit()
