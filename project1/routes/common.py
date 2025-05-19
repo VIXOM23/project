@@ -34,7 +34,7 @@ def edit_account_info():
         elif current_user.get_role() == 'admin':
             user = Admin.query.get(current_user.id)
 
-        file = form.avatar.data
+        file = form.profile_photo.data
         if file:
             user.set_image(file) #pyright: ignore
         user.username = form.username.data  # pyright: ignore

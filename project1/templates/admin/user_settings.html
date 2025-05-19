@@ -54,7 +54,7 @@
             <div class="user-card">
                 <a href="{{url_for('admin.user_pages', user_id=user.id)}}" class="user-link">
                     <div class="user-info">
-                        <span class="username">User {{ user.username }}</span>
+                        <span class="username">Пользователь {{ user.username }}</span>
                         <span class="user-status {{ 'active' if user.is_active() else 'inactive' }}">
                             Status: {{ 'ACTIVE' if user.is_active() else 'INACTIVE' }}
                         </span>

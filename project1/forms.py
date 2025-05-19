@@ -95,9 +95,11 @@ class UpdateAccountForm(FlaskForm):
     submit = SubmitField("Apply Chandes",
                          render_kw={'class': 'account-button'})
 
-    avatar = FileField(validators=[Optional()], 
+    profile_photo = FileField(validators=[Optional()], 
                        render_kw={
-                       })
+                           "style" : "display:none;",
+                           "id" : "profile-photo-input",
+                           })
     def validate_password(self, password):
         if self.password.data != "":
             if not current_user.check_password(self.password.data): 

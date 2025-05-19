@@ -15,9 +15,6 @@ def settings():
     return render_template('admin/admin_panel.html', title='Настройки') 
 
 
-
-
-
 @admin_bp.route('/settings/subs', methods=["GET", "POST"])
 @admin_required
 @login_required
